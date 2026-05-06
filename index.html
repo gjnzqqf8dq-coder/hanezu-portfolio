@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="hanezu design lab - 藝大デザイン科×AIで「美しい・速い・適正価格」のクリエイティブを">
+<title>hanezu design lab — Tokyo, Geidai-based creative studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --hanezu: #C2403A;
+    --hanezu-soft: #E8C4B8;
+    --hanezu-bg: #FAF6F2;
+    --ink: #1A1A1A;
+    --ink-soft: #4A4A4A;
+    --ink-faint: #8A8A8A;
+    --line: #E8E0D6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', 'Noto Serif JP', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--hanezu-bg);
+    color: var(--ink);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+
+  /* Header */
+  header {
+    padding: 32px 0;
+    border-bottom: 1px solid var(--line);
+    position: sticky; top: 0;
+    background: rgba(250, 246, 242, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+  }
+  header .container { display: flex; justify-content: space-between; align-items: center; }
+  .logo {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 22px; font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+  }
+  .logo .accent { color: var(--hanezu); }
+  nav ul { list-style: none; display: flex; gap: 36px; }
+  nav a { color: var(--ink-soft); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+  nav a:hover { color: var(--hanezu); }
+
+  /* Hero */
+  .hero {
+    padding: 140px 0 120px;
+    border-bottom: 1px solid var(--line);
+  }
+  .hero h1 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(36px, 5.5vw, 64px);
+    line-height: 1.3;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 32px;
+  }
+  .hero h1 .red { color: var(--hanezu); }
+  .hero p {
+    font-size: 18px;
+    color: var(--ink-soft);
+    max-width: 620px;
+    margin-bottom: 48px;
+  }
+  .cta-row { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn {
+    display: inline-block;
+    padding: 16px 32px;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .btn-primary {
+    background: var(--hanezu);
+    color: #fff;
+  }
+  .btn-primary:hover { background: #A53530; }
+  .btn-ghost {
+    border: 1px solid var(--ink);
+    color: var(--ink);
+  }
+  .btn-ghost:hover { background: var(--ink); color: #fff; }
+
+  /* Sections */
+  section.block { padding: 100px 0; border-bottom: 1px solid var(--line); }
+  .section-label {
+    font-size: 12px;
+    color: var(--hanezu);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(28px, 3.5vw, 40px);
+    font-weight: 700;
+    margin-bottom: 24px;
+  }
+  .section-lead {
+    font-size: 16px;
+    color: var(--ink-soft);
+    max-width: 680px;
+    margin-bottom: 64px;
+  }
+
+  /* Services Grid */
+  .services { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+  .service-card {
+    padding: 36px 28px;
+    border: 1px solid var(--line);
+    background: #fff;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+  .service-card:hover {
+    border-color: var(--hanezu);
+    transform: translateY(-2px);
+  }
+  .service-num {
+    font-family: 'Noto Serif JP', serif;
+    color: var(--hanezu);
+    font-size: 14px;
+    margin-bottom: 12px;
+    letter-spacing: 0.05em;
+  }
+  .service-card h3 {
+    font-size: 18px;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+  .service-card p {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-bottom: 20px;
+    line-height: 1.7;
+  }
+  .service-price {
+    color: var(--hanezu);
+    font-weight: 600;
+    font-size: 13px;
+  }
+
+  /* Process */
+  .process { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; }
+  .step {
+    padding: 28px 0;
+    border-top: 2px solid var(--hanezu);
+  }
+  .step-num {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 36px;
+    color: var(--hanezu);
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .step h4 { font-size: 16px; margin-bottom: 8px; font-weight: 600; }
+  .step p { font-size: 13px; color: var(--ink-soft); }
+
+  /* About */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .about-points { list-style: none; }
+  .about-points li {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 15px;
+    color: var(--ink-soft);
+  }
+  .about-points li strong { color: var(--ink); display: block; margin-bottom: 4px; font-size: 16px; }
+
+  /* CTA */
+  .cta-section {
+    padding: 100px 0;
+    background: var(--ink);
+    color: #fff;
+    text-align: center;
+  }
+  .cta-section h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(28px, 4vw, 44px);
+    margin-bottom: 24px;
+  }
+  .cta-section p { color: rgba(255,255,255,0.7); margin-bottom: 40px; max-width: 540px; margin-left: auto; margin-right: auto; }
+  .cta-section .btn-primary { background: var(--hanezu); }
+
+  /* Footer */
+  footer {
+    padding: 40px 0;
+    text-align: center;
+    color: var(--ink-faint);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 720px) {
+    nav ul { display: none; }
+    .hero { padding: 80px 0 60px; }
+    .about-grid { grid-template-columns: 1fr; gap: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="logo">hanezu<span class="accent">.</span></div>
+    <nav>
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <h1>
+      藝大の<span class="red">デザイン感性</span>と、<br>
+      AIの<span class="red">速度</span>を、<br>
+      ひとつのスタジオで。
+    </h1>
+    <p>
+      hanezuは、東京藝術大学デザイン科の現役学生が運営する小さなクリエイティブスタジオです。クラシカルなデザイン基礎と、最新のAIツールを組み合わせ、「美しい・速い・適正価格」を実現します。
+    </p>
+    <div class="cta-row">
+      <a href="#contact" class="btn btn-primary">ご相談する →</a>
+      <a href="#services" class="btn btn-ghost">サービスを見る</a>
+    </div>
+  </div>
+</section>
+
+<section id="services" class="block">
+  <div class="container">
+    <div class="section-label">SERVICES</div>
+    <h2 class="section-title">5つのコアサービス</h2>
+    <p class="section-lead">どのサービスも、AIで効率化しつつ、最終仕上げは必ず人の手で。藝大基準のクオリティで、相場の50〜70%の価格でご提供します。</p>
+    <div class="services">
+      <div class="service-card">
+        <div class="service-num">— 01</div>
+        <h3>LP・HP制作</h3>
+        <p>1ページ完結のLPから多ページのHPまで。構成・デザイン・コーディングまで一気通貫。</p>
+        <div class="service-price">¥8,000 〜</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">— 02</div>
+        <h3>ロゴ・ブランド設計</h3>
+        <p>3案ご提案、修正無制限。AI / SVG / PNG など全形式で納品。商標登録対応も可。</p>
+        <div class="service-price">¥3,000 〜</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">— 03</div>
+        <h3>Notion構築</h3>
+        <p>個人・チーム向けの管理テンプレートを完全カスタムで設計。使い方ガイド付き。</p>
+        <div class="service-price">¥3,000 〜</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">— 04</div>
+        <h3>AIイラスト・素材制作</h3>
+        <p>テイスト統一の50枚パックから。商用利用OK。ブログ・SNS・資料用に。</p>
+        <div class="service-price">¥1,500 〜</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">— 05</div>
+        <h3>YouTubeサムネイル</h3>
+        <p>クリック率を意識した構図・配色設計。1枚あたり500円〜の量産対応も可能。</p>
+        <div class="service-price">¥2,500 〜</div>
+      </div>
+      <div class="service-card" style="background: var(--hanezu-bg); border-style: dashed;">
+        <div class="service-num">— Custom</div>
+        <h3>お見積もり相談</h3>
+        <p>上記以外の依頼もお気軽に。デザイン全般、Web実装、AI活用、なんでもご相談ください。</p>
+        <div class="service-price">応相談</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process" class="block">
+  <div class="container">
+    <div class="section-label">PROCESS</div>
+    <h2 class="section-title">最短即日、最大1週間</h2>
+    <p class="section-lead">AIで時間を圧縮し、人の判断で品質を担保。シンプルな4ステップで進行します。</p>
+    <div class="process">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h4>ヒアリング</h4>
+        <p>用途・ターゲット・参考事例をシートで共有。15〜30分で完了。</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h4>提案</h4>
+        <p>方向性のラフを1〜3案。AIで素早く検討、人間が最適化。</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h4>制作</h4>
+        <p>採用案を本制作。修正対応も含めスムーズに進行。</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h4>納品</h4>
+        <p>必要な形式すべてでお渡し。著作権譲渡・商用利用OK。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="block">
+  <div class="container">
+    <div class="section-label">ABOUT</div>
+    <h2 class="section-title">hanezuについて</h2>
+    <div class="about-grid">
+      <div>
+        <p style="font-size: 16px; color: var(--ink-soft); line-height: 1.9;">
+          「hanezu（はねず）」は古代日本の朱色を意味する、万葉集にも登場する古い言葉です。<br><br>
+          私たちは、その名前の通り、「古典的な美意識の蓄積」と「現代技術の最先端」が交わる場所でありたいと考えています。<br><br>
+          東京藝術大学デザイン科で培ったタイポグラフィ・色彩理論・構図の基礎力。そして、Claude / Gemini / Stable Diffusion などのAIツールを徹底活用した実装力。この2つを掛け合わせることで、これまで個人が手の届かなかった価格帯で、プロ品質のクリエイティブを提供します。
+        </p>
+      </div>
+      <ul class="about-points">
+        <li><strong>藝大基準のクオリティ</strong>AIの出力を鵜呑みにせず、必ず構図・色彩・タイポを人間が監修。</li>
+        <li><strong>AI活用で爆速納品</strong>通常の制作期間を50%以上短縮。最短即日対応も可能。</li>
+        <li><strong>適正価格の徹底</strong>相場の50〜70%。透明性のある料金体系。</li>
+        <li><strong>長期パートナーシップ</strong>単発でも、継続でも。リピーター割引あり。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="cta-section">
+  <div class="container">
+    <h2>まずは気軽にご相談ください。</h2>
+    <p>ご相談・お見積もりは無料です。ココナラ・Lancers経由でも、直接メッセージでも。</p>
+    <div class="cta-row" style="justify-content: center;">
+      <a href="#" class="btn btn-primary">ココナラで依頼する →</a>
+      <a href="#" class="btn btn-ghost" style="border-color: rgba(255,255,255,0.3); color: #fff;">Lancersで依頼する</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    © 2026 hanezu design lab — Tokyo
+  </div>
+</footer>
+
+</body>
+</html>

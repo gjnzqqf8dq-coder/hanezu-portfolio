@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>木漏れ café — A small coffee shop in Yanaka</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Noto+Serif+JP:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bean: #3D2817;
+    --milk: #FAF4ED;
+    --cream: #E8DDD0;
+    --leaf: #6B7F5A;
+    --line: #D5C8B8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', 'Noto Serif JP', sans-serif;
+    color: var(--bean);
+    background: var(--milk);
+    line-height: 1.7;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+  h1, h2, h3 { font-family: 'Cormorant Garamond', 'Noto Serif JP', serif; font-weight: 400; }
+
+  /* Nav */
+  nav { padding: 28px 0; }
+  nav .container { display: flex; justify-content: space-between; align-items: center; }
+  .logo { font-family: 'Cormorant Garamond', serif; font-size: 24px; letter-spacing: 0.05em; }
+  .nav-links { list-style: none; display: flex; gap: 32px; }
+  .nav-links a { color: var(--bean); text-decoration: none; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* Hero */
+  .hero {
+    padding: 80px 0 120px;
+    text-align: center;
+  }
+  .hero .tagline {
+    font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase;
+    margin-bottom: 32px; color: var(--leaf);
+  }
+  .hero h1 {
+    font-size: clamp(48px, 7vw, 88px);
+    line-height: 1.1;
+    margin-bottom: 32px;
+    font-style: italic;
+  }
+  .hero p {
+    font-size: 17px;
+    max-width: 540px;
+    margin: 0 auto 40px;
+    color: rgba(61,40,23,0.75);
+  }
+  .hero-image {
+    width: 100%;
+    height: 500px;
+    background: linear-gradient(135deg, #A88968 0%, #6B7F5A 50%, #3D2817 100%);
+    border-radius: 4px;
+    margin-top: 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-image::before {
+    content: '☕';
+    position: absolute;
+    font-size: 200px;
+    opacity: 0.1;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  /* Story */
+  .story { padding: 120px 0; }
+  .story-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .story-image {
+    height: 480px;
+    background: linear-gradient(135deg, var(--cream), var(--leaf));
+    border-radius: 4px;
+  }
+  .story h2 {
+    font-size: clamp(32px, 4vw, 48px);
+    margin-bottom: 32px;
+    line-height: 1.2;
+    font-style: italic;
+  }
+  .story p {
+    font-size: 16px;
+    margin-bottom: 24px;
+    color: rgba(61,40,23,0.85);
+  }
+
+  /* Menu */
+  .menu {
+    padding: 120px 0;
+    background: var(--cream);
+  }
+  .menu-header { text-align: center; margin-bottom: 80px; }
+  .menu-header .tagline {
+    font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--leaf); margin-bottom: 16px;
+  }
+  .menu-header h2 {
+    font-size: clamp(36px, 5vw, 60px);
+    font-style: italic;
+  }
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 56px;
+  }
+  .menu-item {
+    border-bottom: 1px dotted var(--bean);
+    padding-bottom: 28px;
+  }
+  .menu-item-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 8px;
+  }
+  .menu-item h3 {
+    font-size: 22px;
+  }
+  .menu-item .price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    color: var(--leaf);
+  }
+  .menu-item p {
+    font-size: 13px;
+    color: rgba(61,40,23,0.7);
+  }
+
+  /* Hours */
+  .hours {
+    padding: 120px 0;
+    text-align: center;
+  }
+  .hours h2 {
+    font-size: clamp(32px, 4vw, 48px);
+    font-style: italic;
+    margin-bottom: 40px;
+  }
+  .hours-grid {
+    display: inline-block;
+    text-align: left;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 32px 80px;
+  }
+  .hours-row {
+    display: flex; justify-content: space-between;
+    gap: 48px;
+    padding: 8px 0;
+    font-size: 16px;
+  }
+  .hours-row span:first-child { font-family: 'Cormorant Garamond', serif; font-size: 20px; }
+
+  /* Footer */
+  footer {
+    padding: 80px 0 40px;
+    background: var(--bean);
+    color: var(--milk);
+    text-align: center;
+  }
+  footer h3 {
+    font-size: 32px;
+    font-style: italic;
+    margin-bottom: 24px;
+  }
+  footer p { color: rgba(250,244,237,0.7); font-size: 14px; }
+  footer .address { margin: 24px 0; font-size: 15px; }
+  footer .copyright { font-size: 11px; color: rgba(250,244,237,0.4); margin-top: 40px; letter-spacing: 0.1em; }
+
+  @media (max-width: 720px) {
+    .nav-links { display: none; }
+    .story-grid { grid-template-columns: 1fr; gap: 32px; }
+    .story-image { height: 280px; }
+    .hours-grid { padding: 24px 32px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <div class="logo">木漏れ café</div>
+    <ul class="nav-links">
+      <li><a href="#story">Story</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#hours">Hours</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="tagline">— A small coffee shop in Yanaka —</div>
+    <h1>Slow mornings,<br>warm conversations.</h1>
+    <p>東京・谷中の路地裏にある、小さな喫茶店です。<br>厳選した豆と、手仕事のスイーツで、ゆっくりとした時間をどうぞ。</p>
+    <div class="hero-image"></div>
+  </div>
+</section>
+
+<section id="story" class="story">
+  <div class="container">
+    <div class="story-grid">
+      <div class="story-image"></div>
+      <div>
+        <h2>Our Story</h2>
+        <p>2018年、谷中の古い民家を改装してオープンしました。窓から差し込む木漏れ日に名前を借り、訪れる人にとっての「ゆっくり」を大切にしたい、という想いで運営しています。</p>
+        <p>豆はエチオピア・グアテマラ・コロンビアから直輸入した自家焙煎。スイーツは毎朝、店主が手作りしています。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="menu" class="menu">
+  <div class="container">
+    <div class="menu-header">
+      <div class="tagline">— Today's Menu —</div>
+      <h2>Coffee & Sweets</h2>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div class="menu-item-row"><h3>Drip Coffee</h3><div class="price">¥550</div></div>
+        <p>エチオピア・イルガチェフェ。柑橘系の華やかな香り。</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-row"><h3>Café au Lait</h3><div class="price">¥620</div></div>
+        <p>北海道産ノンホモ牛乳を使った、コクのあるカフェオレ。</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-row"><h3>Cold Brew</h3><div class="price">¥600</div></div>
+        <p>12時間水出しの、すっきりとした夏の定番。</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-row"><h3>Cheesecake</h3><div class="price">¥520</div></div>
+        <p>濃厚すぎないクリームチーズと、軽やかなサワークリーム。</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-row"><h3>Anko Toast</h3><div class="price">¥480</div></div>
+        <p>自家製つぶ餡と、北海道産発酵バター。</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-row"><h3>Seasonal Tart</h3><div class="price">¥620</div></div>
+        <p>季節のフルーツを使った、月替わりタルト。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="hours" class="hours">
+  <div class="container">
+    <h2>Open Hours</h2>
+    <div class="hours-grid">
+      <div class="hours-row"><span>Mon — Fri</span><span>9:00 — 18:00</span></div>
+      <div class="hours-row"><span>Sat — Sun</span><span>10:00 — 19:00</span></div>
+      <div class="hours-row"><span>Closed</span><span>Wednesday</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <h3>Visit us</h3>
+    <p class="address">〒110-0001 東京都台東区谷中3-15-X<br>千代田線 千駄木駅から徒歩7分</p>
+    <p>03-XXXX-XXXX / hello@komorebi-cafe.example</p>
+    <div class="copyright">SAMPLE LP — Designed by hanezu design lab</div>
+  </div>
+</footer>
+
+</body>
+</html>

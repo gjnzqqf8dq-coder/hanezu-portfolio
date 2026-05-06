@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personal OS — Notion-style management dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAFAF9;
+    --surface: #FFFFFF;
+    --line: #EBEAE7;
+    --text: #2A2A2A;
+    --text-muted: #787872;
+    --text-faint: #B0B0AA;
+    --accent: #C2403A;
+    --green: #4A8A4A;
+    --orange: #D88838;
+    --blue: #5E81B5;
+    --tag-blue: #E8EFF7;
+    --tag-pink: #F7E8E8;
+    --tag-green: #E8F2E8;
+    --tag-yellow: #F7F2DE;
+    --tag-grey: #ECECE8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', 'Noto Sans JP', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    font-size: 15px;
+  }
+  .layout { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+
+  /* Sidebar */
+  .sidebar {
+    background: #F4F3F0;
+    border-right: 1px solid var(--line);
+    padding: 16px 12px;
+  }
+  .workspace {
+    padding: 8px 8px 16px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 16px;
+  }
+  .workspace-name { font-size: 14px; font-weight: 600; }
+  .workspace-sub { font-size: 11px; color: var(--text-faint); }
+  .nav-section { margin-bottom: 16px; }
+  .nav-label {
+    font-size: 11px;
+    color: var(--text-faint);
+    padding: 4px 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+  }
+  .nav-item {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .nav-item:hover { background: rgba(0,0,0,0.04); color: var(--text); }
+  .nav-item.active { background: rgba(194,64,58,0.08); color: var(--accent); font-weight: 500; }
+  .nav-icon { font-size: 14px; }
+
+  /* Main */
+  main { padding: 32px 56px; max-width: 100%; }
+  .page-header { margin-bottom: 32px; }
+  .breadcrumb { font-size: 12px; color: var(--text-faint); margin-bottom: 8px; }
+  .page-title {
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  .page-meta {
+    display: flex; gap: 24px;
+    font-size: 13px;
+    color: var(--text-muted);
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .page-meta strong { color: var(--text); font-weight: 500; }
+
+  /* Top widgets row */
+  .widgets {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin: 32px 0;
+  }
+  .widget {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 20px;
+  }
+  .widget-label {
+    font-size: 11px;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .widget-value {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .widget-trend { font-size: 12px; color: var(--green); }
+  .widget-trend.warn { color: var(--orange); }
+  .widget-trend.danger { color: var(--accent); }
+
+  /* Grid sections */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 32px 0; }
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 24px;
+  }
+  .panel-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .panel-title { font-size: 14px; font-weight: 600; }
+  .panel-action {
+    font-size: 12px; color: var(--accent); cursor: pointer;
+  }
+
+  /* Today's tasks */
+  .task-list { list-style: none; }
+  .task-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .task-item:last-child { border-bottom: none; }
+  .task-check {
+    width: 16px; height: 16px;
+    border: 1.5px solid var(--text-faint);
+    border-radius: 4px;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+  .task-check.done { background: var(--green); border-color: var(--green); position: relative; }
+  .task-check.done::after { content: '✓'; color: #fff; position: absolute; top: -3px; left: 1px; font-size: 13px; font-weight: 700; }
+  .task-text { font-size: 14px; flex: 1; }
+  .task-text.done { text-decoration: line-through; color: var(--text-faint); }
+  .task-tag {
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+  }
+  .tag-blue { background: var(--tag-blue); color: #4A6993; }
+  .tag-pink { background: var(--tag-pink); color: #A06060; }
+  .tag-green { background: var(--tag-green); color: #4A7A4A; }
+  .tag-yellow { background: var(--tag-yellow); color: #8A7028; }
+  .tag-grey { background: var(--tag-grey); color: #585852; }
+
+  /* Habit tracker */
+  .habit-grid { display: grid; gap: 12px; }
+  .habit-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    align-items: center;
+    gap: 12px;
+  }
+  .habit-name { font-size: 13px; }
+  .habit-cells { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .habit-cell {
+    aspect-ratio: 1;
+    border-radius: 4px;
+    background: var(--tag-grey);
+  }
+  .habit-cell.done { background: var(--green); }
+  .habit-cell.miss { background: var(--tag-pink); }
+
+  /* Goals */
+  .goal {
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .goal:last-child { border-bottom: none; }
+  .goal-header {
+    display: flex; justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+  .goal-name { font-weight: 500; }
+  .goal-percent { color: var(--text-muted); font-size: 12px; }
+  .goal-bar {
+    height: 6px;
+    background: var(--tag-grey);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .goal-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 3px;
+  }
+
+  /* Schedule */
+  .schedule-item {
+    display: grid;
+    grid-template-columns: 60px 4px 1fr;
+    gap: 12px;
+    padding: 8px 0;
+  }
+  .schedule-time { font-size: 12px; color: var(--text-muted); padding-top: 2px; }
+  .schedule-bar { background: var(--accent); border-radius: 2px; }
+  .schedule-bar.blue { background: var(--blue); }
+  .schedule-bar.green { background: var(--green); }
+  .schedule-bar.orange { background: var(--orange); }
+  .schedule-content { font-size: 13px; }
+  .schedule-title { font-weight: 500; }
+  .schedule-detail { font-size: 11px; color: var(--text-muted); }
+
+  /* Mood weekly */
+  .mood-week {
+    display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px;
+    text-align: center;
+    margin-top: 16px;
+  }
+  .mood-day {
+    padding: 12px 0;
+    background: var(--bg);
+    border-radius: 6px;
+    border: 1px solid var(--line);
+  }
+  .mood-emoji { font-size: 22px; margin-bottom: 4px; }
+  .mood-day-label { font-size: 10px; color: var(--text-faint); }
+
+  /* Quick links */
+  .quick-links {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;
+  }
+  .quick-link {
+    padding: 12px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 13px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .quick-link:hover { background: var(--surface); border-color: var(--text-faint); }
+  .quick-link-icon { font-size: 16px; }
+
+  @media (max-width: 1024px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    main { padding: 24px; }
+    .widgets { grid-template-columns: repeat(2, 1fr); }
+    .grid-2 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="workspace">
+      <div class="workspace-name">My Workspace</div>
+      <div class="workspace-sub">5 pages · synced</div>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-label">Main</div>
+      <div class="nav-item active"><span class="nav-icon">⊕</span> Dashboard</div>
+      <div class="nav-item"><span class="nav-icon">◰</span> Today</div>
+      <div class="nav-item"><span class="nav-icon">▤</span> Tasks</div>
+      <div class="nav-item"><span class="nav-icon">⌘</span> Calendar</div>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-label">Projects</div>
+      <div class="nav-item"><span class="nav-icon">●</span> 個人プロジェクト</div>
+      <div class="nav-item"><span class="nav-icon">●</span> 学習</div>
+      <div class="nav-item"><span class="nav-icon">●</span> 副業</div>
+      <div class="nav-item"><span class="nav-icon">●</span> 健康</div>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-label">Tracking</div>
+      <div class="nav-item"><span class="nav-icon">◐</span> 習慣</div>
+      <div class="nav-item"><span class="nav-icon">⊙</span> 目標</div>
+      <div class="nav-item"><span class="nav-icon">¥</span> 家計</div>
+      <div class="nav-item"><span class="nav-icon">♡</span> 気分</div>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-label">Notes</div>
+      <div class="nav-item"><span class="nav-icon">≡</span> Daily Note</div>
+      <div class="nav-item"><span class="nav-icon">≡</span> Weekly Review</div>
+      <div class="nav-item"><span class="nav-icon">≡</span> Reading List</div>
+    </div>
+  </aside>
+
+  <main>
+    <div class="page-header">
+      <div class="breadcrumb">My Workspace / Dashboard</div>
+      <h1 class="page-title">⊕ Dashboard</h1>
+      <div class="page-meta">
+        <span><strong>Today</strong> 2026-05-07 (Thu)</span>
+        <span><strong>Week</strong> 19 / 52</span>
+        <span><strong>Streak</strong> 12 days 🔥</span>
+      </div>
+    </div>
+
+    <!-- Top widgets -->
+    <div class="widgets">
+      <div class="widget">
+        <div class="widget-label">Today's Tasks</div>
+        <div class="widget-value">4 / 7</div>
+        <div class="widget-trend">+57% complete</div>
+      </div>
+      <div class="widget">
+        <div class="widget-label">Active Goals</div>
+        <div class="widget-value">3</div>
+        <div class="widget-trend">avg 62% on track</div>
+      </div>
+      <div class="widget">
+        <div class="widget-label">Habits Today</div>
+        <div class="widget-value">5 / 6</div>
+        <div class="widget-trend warn">missed: water intake</div>
+      </div>
+      <div class="widget">
+        <div class="widget-label">Focus Hours</div>
+        <div class="widget-value">3.5h</div>
+        <div class="widget-trend">+0.8h vs avg</div>
+      </div>
+    </div>
+
+    <!-- Grid Row 1 -->
+    <div class="grid-2">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">▤ Today's Tasks</div>
+          <div class="panel-action">+ New task</div>
+        </div>
+        <ul class="task-list">
+          <li class="task-item">
+            <div class="task-check done"></div>
+            <div class="task-text done">朝のルーティン（瞑想10分・日記）</div>
+            <span class="task-tag tag-green">習慣</span>
+          </li>
+          <li class="task-item">
+            <div class="task-check done"></div>
+            <div class="task-text done">クライアントAヒアリング返信</div>
+            <span class="task-tag tag-blue">副業</span>
+          </li>
+          <li class="task-item">
+            <div class="task-check done"></div>
+            <div class="task-text done">教科書 第3章レポート提出</div>
+            <span class="task-tag tag-pink">学習</span>
+          </li>
+          <li class="task-item">
+            <div class="task-check done"></div>
+            <div class="task-text done">郵便局で確定申告書類郵送</div>
+            <span class="task-tag tag-grey">雑務</span>
+          </li>
+          <li class="task-item">
+            <div class="task-check"></div>
+            <div class="task-text">ロゴ案 2 → クライアントBに提案</div>
+            <span class="task-tag tag-blue">副業</span>
+          </li>
+          <li class="task-item">
+            <div class="task-check"></div>
+            <div class="task-text">読書: "Atomic Habits" 第4章</div>
+            <span class="task-tag tag-yellow">読書</span>
+          </li>
+          <li class="task-item">
+            <div class="task-check"></div>
+            <div class="task-text">エニタイム 1h 筋トレ</div>
+            <span class="task-tag tag-green">習慣</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">⌘ Today's Schedule</div>
+          <div class="panel-action">View week →</div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-time">06:30</div>
+          <div class="schedule-bar green"></div>
+          <div class="schedule-content">
+            <div class="schedule-title">朝のルーティン</div>
+            <div class="schedule-detail">瞑想・ストレッチ・日記 / 30 min</div>
+          </div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-time">09:00</div>
+          <div class="schedule-bar blue"></div>
+          <div class="schedule-content">
+            <div class="schedule-title">大学・授業</div>
+            <div class="schedule-detail">デザイン演習 / 90 min</div>
+          </div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-time">12:00</div>
+          <div class="schedule-bar"></div>
+          <div class="schedule-content">
+            <div class="schedule-title">ランチ・休憩</div>
+            <div class="schedule-detail">家で / 40 min</div>
+          </div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-time">14:00</div>
+          <div class="schedule-bar"></div>
+          <div class="schedule-content">
+            <div class="schedule-title">副業: クライアント対応</div>
+            <div class="schedule-detail">ロゴ提案 / 120 min</div>
+          </div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-time">19:00</div>
+          <div class="schedule-bar orange"></div>
+          <div class="schedule-content">
+            <div class="schedule-title">エニタイム</div>
+            <div class="schedule-detail">脚 + 有酸素 / 60 min</div>
+          </div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-time">21:00</div>
+          <div class="schedule-bar green"></div>
+          <div class="schedule-content">
+            <div class="schedule-title">夕食 + 振り返り</div>
+            <div class="schedule-detail">家 + 日記更新 / 90 min</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid Row 2 -->
+    <div class="grid-2">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">⊙ Active Goals</div>
+          <div class="panel-action">View all →</div>
+        </div>
+        <div class="goal">
+          <div class="goal-header">
+            <div class="goal-name">2週間で副業ネット 4万円</div>
+            <div class="goal-percent">35%</div>
+          </div>
+          <div class="goal-bar"><div class="goal-fill" style="width: 35%;"></div></div>
+        </div>
+        <div class="goal">
+          <div class="goal-header">
+            <div class="goal-name">体重 -3kg（5月末まで）</div>
+            <div class="goal-percent">60%</div>
+          </div>
+          <div class="goal-bar"><div class="goal-fill" style="width: 60%;"></div></div>
+        </div>
+        <div class="goal">
+          <div class="goal-header">
+            <div class="goal-name">読書 12冊（年間）</div>
+            <div class="goal-percent">42%</div>
+          </div>
+          <div class="goal-bar"><div class="goal-fill" style="width: 42%;"></div></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">◐ Habits — This Week</div>
+          <div class="panel-action">See history →</div>
+        </div>
+        <div class="habit-grid">
+          <div class="habit-row">
+            <div class="habit-name">瞑想 10分</div>
+            <div class="habit-cells">
+              <div class="habit-cell done"></div><div class="habit-cell done"></div><div class="habit-cell done"></div><div class="habit-cell done"></div><div class="habit-cell done"></div><div class="habit-cell done"></div><div class="habit-cell done"></div>
+            </div>
+          </div>
+          <div class="habit-row">
+            <div class="habit-name">読書 30分</div>
+            <div class="habit-cells">
+              <div class="habit-cell done"></div><div class="habit-cell done"></div><div class="habit-cell miss"></div><div class="habit-cell done"></div><div class="habit-cell done"></div><div class="habit-cell done"></div><div class="habit-cell done"></div>
+            </div>
+          </div>
+          <div class="habit-row">
+            <div class="habit-name">水 2L</div>
+            <div class="habit-cells">
+              <div class="habit-cell done"></div><div class="habit-cell done"></div><div class="habit-cell done"></div><div class="habit-cell miss"></div><div class="habit-cell done"></div><div class="habit-cell done"></div><div class="habit-cell"></div>
+            </div>
+          </div>
+          <div class="habit-row">
+            <div class="habit-name">ジム / 運動</div>
+            <div class="habit-cells">
+              <div class="habit-cell done"></div><div class="habit-cell"></div><div class="habit-cell done"></div><div class="habit-cell done"></div><div class="habit-cell"></div><div class="habit-cell done"></div><div class="habit-cell"></div>
+            </div>
+          </div>
+          <div class="habit-row">
+            <div class="habit-name">日記</div>
+            <div class="habit-cells">
+              <div class="habit-cell done"></div><div class="habit-cell done"></div><div class="habit-cell done"></div><div class="habit-cell done"></div><div class="habit-cell done"></div><div class="habit-cell done"></div><div class="habit-cell done"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid Row 3 -->
+    <div class="grid-2">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">♡ Mood — This Week</div>
+        </div>
+        <div class="mood-week">
+          <div class="mood-day"><div class="mood-emoji">😊</div><div class="mood-day-label">Mon</div></div>
+          <div class="mood-day"><div class="mood-emoji">🙂</div><div class="mood-day-label">Tue</div></div>
+          <div class="mood-day"><div class="mood-emoji">😐</div><div class="mood-day-label">Wed</div></div>
+          <div class="mood-day"><div class="mood-emoji">🙂</div><div class="mood-day-label">Thu</div></div>
+          <div class="mood-day"><div class="mood-emoji">😄</div><div class="mood-day-label">Fri</div></div>
+          <div class="mood-day"><div class="mood-emoji">😄</div><div class="mood-day-label">Sat</div></div>
+          <div class="mood-day"><div class="mood-emoji">😴</div><div class="mood-day-label">Sun</div></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">🔗 Quick Links</div>
+        </div>
+        <div class="quick-links">
+          <a class="quick-link"><span class="quick-link-icon">📧</span> Inbox</a>
+          <a class="quick-link"><span class="quick-link-icon">💬</span> Slack</a>
+          <a class="quick-link"><span class="quick-link-icon">📊</span> 家計簿</a>
+          <a class="quick-link"><span class="quick-link-icon">📝</span> Daily Note</a>
+          <a class="quick-link"><span class="quick-link-icon">🎯</span> 副業ダッシュ</a>
+          <a class="quick-link"><span class="quick-link-icon">📚</span> 読書ログ</a>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+</body>
+</html>
