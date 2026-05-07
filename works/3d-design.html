@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Design — kasane / 重ね — hanezu design lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --hanezu: #C2403A;
+    --hanezu-soft: #E8C4B8;
+    --hanezu-bg: #FAF6F2;
+    --ink: #1A1A1A;
+    --ink-soft: #4A4A4A;
+    --ink-faint: #8A8A8A;
+    --line: #E8E0D6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', 'Noto Serif JP', sans-serif;
+    background: var(--hanezu-bg);
+    color: var(--ink);
+    line-height: 1.7;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+
+  header {
+    padding: 32px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  header .container { display: flex; justify-content: space-between; align-items: center; }
+  .logo {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 22px; font-weight: 700;
+  }
+  .logo .accent { color: var(--hanezu); }
+  nav ul { list-style: none; display: flex; gap: 36px; }
+  nav a { color: var(--ink-soft); text-decoration: none; font-size: 14px; }
+  nav a:hover { color: var(--hanezu); }
+
+  .hero {
+    padding: 100px 0 80px;
+  }
+  .label {
+    font-size: 12px;
+    color: var(--hanezu);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(40px, 6vw, 72px);
+    line-height: 1.1;
+    margin-bottom: 24px;
+    font-weight: 700;
+  }
+  .hero h1 .accent { color: var(--hanezu); }
+  .hero .lead {
+    font-size: 18px;
+    color: var(--ink-soft);
+    max-width: 680px;
+    margin-bottom: 32px;
+  }
+  .meta {
+    display: flex;
+    gap: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .meta strong { color: var(--ink); display: block; margin-bottom: 4px; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; }
+
+  .gallery {
+    padding: 80px 0;
+  }
+  .main-image {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #fff;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    border: 1px solid var(--line);
+  }
+  .main-image img { width: 100%; height: 100%; object-fit: cover; }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .gallery-item {
+    aspect-ratio: 1/1;
+    background: #fff;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+
+  .concept {
+    padding: 80px 0;
+    border-top: 1px solid var(--line);
+  }
+  .concept h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 32px;
+    margin-bottom: 32px;
+  }
+  .concept-text {
+    font-size: 17px;
+    color: var(--ink-soft);
+    max-width: 720px;
+  }
+  .concept-text p { margin-bottom: 20px; }
+
+  .process {
+    padding: 80px 0;
+    border-top: 1px solid var(--line);
+  }
+  .process h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 32px;
+    margin-bottom: 48px;
+  }
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 32px;
+  }
+  .step {
+    padding: 28px 0;
+    border-top: 2px solid var(--hanezu);
+  }
+  .step-num {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 36px;
+    color: var(--hanezu);
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .step h4 { font-size: 16px; margin-bottom: 8px; font-weight: 600; }
+  .step p { font-size: 13px; color: var(--ink-soft); }
+
+  .tech {
+    padding: 80px 0;
+    border-top: 1px solid var(--line);
+  }
+  .tech h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 32px;
+    margin-bottom: 32px;
+  }
+  .tech-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .tech-item {
+    padding: 24px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+  }
+  .tech-item h4 {
+    font-size: 14px;
+    color: var(--hanezu);
+    margin-bottom: 8px;
+    letter-spacing: 0.05em;
+  }
+  .tech-item p { font-size: 14px; color: var(--ink-soft); }
+
+  footer {
+    padding: 40px 0;
+    text-align: center;
+    color: var(--ink-faint);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    border-top: 1px solid var(--line);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <a href="../index.html" style="text-decoration:none;color:inherit;"><div class="logo">hanezu<span class="accent">.</span></div></a>
+    <nav>
+      <ul>
+        <li><a href="../index.html#services">Services</a></li>
+        <li><a href="index.html">Works</a></li>
+        <li><a href="../index.html#about">About</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="label">3D / PRODUCT DESIGN</div>
+    <h1>kasane <span class="accent">/</span> 重ね</h1>
+    <p class="lead">藝大デザインの感性とプログラミングを交差させた、3層構造のオブジェクト。AIエージェント実装で日常的に書いているPythonの延長線で、Blenderから直接3Dプリント可能なメッシュを生成。</p>
+    <div class="meta">
+      <div><strong>Year</strong> 2026</div>
+      <div><strong>Method</strong> Procedural Design (Python in Blender)</div>
+      <div><strong>Material</strong> PLA / 3D Printed</div>
+      <div><strong>Size</strong> Ø100 × H18 mm</div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery">
+  <div class="container">
+    <div class="main-image">
+      <img src="3d-design/kasane_main.png" alt="kasane main view">
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item"><img src="3d-design/kasane_front.png" alt="kasane front view"></div>
+      <div class="gallery-item"><img src="3d-design/kasane_top.png" alt="kasane top view"></div>
+    </div>
+  </div>
+</section>
+
+<section class="concept">
+  <div class="container">
+    <h2>コンセプト</h2>
+    <div class="concept-text">
+      <p>「重ね（kasane）」は、平安時代の女性が着物を重ね着して色彩を表現した日本の伝統的美意識から着想を得た。和歌や絵巻物に登場する「重ね色」が示すように、日本人は古来から「重なり」によって深さを表現してきた。</p>
+      <p>本作品は、その美意識をプロダクトデザインで再解釈したもの。3層の円盤を意図的にずらして配置することで、上から見たときに 月の満ち欠けや 雪の降り重なりを思わせる微細な「ズレ」が生まれる。</p>
+      <p>制作プロセスは、藝大デザイン科で培った構成感覚と、AIエージェント実装で日常的に書いているPythonの両方を活用した。Blender Pythonでオブジェクトをパラメトリックに生成し、寸法・材質・配置を全て数値で制御。これにより「藝大の感性」と「プログラマブルなデザイン」が一つの作品の中で結実する。</p>
+    </div>
+  </div>
+</section>
+
+<section class="process">
+  <div class="container">
+    <h2>制作プロセス</h2>
+    <div class="process-grid">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h4>コンセプト</h4>
+        <p>「重ね」のリサーチ。古典文献・絵画から色彩構成を抽出。</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h4>パラメトリック設計</h4>
+        <p>Blender Python で円盤の寸法・配置を数値で定義。</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h4>レンダリング</h4>
+        <p>Blender Cycles で 3 視点の高品質画像を生成。</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h4>3Dプリント</h4>
+        <p>STL を Creality Print でスライス、PLA でプリント。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tech">
+  <div class="container">
+    <h2>使用技術</h2>
+    <div class="tech-list">
+      <div class="tech-item">
+        <h4>DESIGN</h4>
+        <p>Blender 5.0 / Python API でパラメトリック生成</p>
+      </div>
+      <div class="tech-item">
+        <h4>RENDERING</h4>
+        <p>Cycles レンダラ / 64 samples / 1920×1080</p>
+      </div>
+      <div class="tech-item">
+        <h4>FABRICATION</h4>
+        <p>Creality K1 / 0.2mm レイヤー / PLA 朱色</p>
+      </div>
+      <div class="tech-item">
+        <h4>WORKFLOW</h4>
+        <p>Gemini Nano Banana Pro → Tripo3D → Blender → Slicer の自動化パイプライン</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">© 2026 hanezu design lab — Tokyo</div>
+</footer>
+
+</body>
+</html>
