@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Series — 重ね · 木漏れ日 — hanezu design lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --hanezu: #C2403A;
+    --hanezu-bg: #FAF6F2;
+    --ink: #1A1A1A;
+    --ink-soft: #4A4A4A;
+    --ink-faint: #8A8A8A;
+    --line: #E8E0D6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', 'Noto Serif JP', sans-serif;
+    background: var(--hanezu-bg);
+    color: var(--ink);
+    line-height: 1.7;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+
+  header {
+    padding: 32px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  header .container { display: flex; justify-content: space-between; align-items: center; }
+  .logo { font-family: 'Noto Serif JP', serif; font-size: 22px; font-weight: 700; }
+  .logo .accent { color: var(--hanezu); }
+  nav ul { list-style: none; display: flex; gap: 36px; }
+  nav a { color: var(--ink-soft); text-decoration: none; font-size: 14px; }
+
+  .hero { padding: 100px 0 60px; }
+  .label {
+    font-size: 12px; color: var(--hanezu);
+    letter-spacing: 0.2em; text-transform: uppercase;
+    font-weight: 600; margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(40px, 6vw, 72px); line-height: 1.15;
+    margin-bottom: 32px; font-weight: 700;
+  }
+  .hero p {
+    font-size: 17px; color: var(--ink-soft);
+    max-width: 720px; line-height: 1.8;
+  }
+
+  .series {
+    padding: 60px 0 100px;
+  }
+  .work-block {
+    margin-bottom: 100px;
+    border-top: 1px solid var(--line);
+    padding-top: 60px;
+  }
+  .work-block:first-child { border-top: none; padding-top: 0; }
+  .work-meta {
+    display: flex; gap: 24px;
+    color: var(--hanezu);
+    font-size: 12px; letter-spacing: 0.15em;
+    text-transform: uppercase; font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .work-block h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(36px, 5vw, 56px);
+    margin-bottom: 24px; font-weight: 700;
+  }
+  .work-block .lead {
+    font-size: 16px; color: var(--ink-soft);
+    max-width: 640px; margin-bottom: 40px;
+  }
+  .work-images {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .work-images img {
+    width: 100%; height: 100%;
+    object-fit: cover; border-radius: 6px;
+    border: 1px solid var(--line);
+  }
+  .work-images.komorebi-style {
+    grid-template-columns: 1fr 1fr;
+  }
+  .work-images.komorebi-style img:first-child {
+    aspect-ratio: 16/9;
+  }
+  .specs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 24px;
+    padding: 24px 0;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .specs strong {
+    color: var(--ink);
+    display: block;
+    margin-bottom: 4px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .pipeline-section {
+    padding: 80px 0;
+    border-top: 1px solid var(--line);
+  }
+  .pipeline-section h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 32px;
+    margin-bottom: 16px;
+  }
+  .pipeline-section p {
+    color: var(--ink-soft);
+    max-width: 720px;
+    margin-bottom: 40px;
+  }
+  .pipeline-flow {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
+    padding: 32px;
+    background: #fff;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+  }
+  .pipeline-step {
+    text-align: center;
+  }
+  .pipeline-step .num {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--hanezu);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    margin: 0 auto 12px;
+  }
+  .pipeline-step h4 {
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+  .pipeline-step p {
+    font-size: 11px;
+    color: var(--ink-faint);
+    margin: 0;
+  }
+
+  footer {
+    padding: 40px 0;
+    text-align: center;
+    color: var(--ink-faint);
+    font-size: 12px;
+    border-top: 1px solid var(--line);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <a href="../index.html" style="text-decoration:none;color:inherit;"><div class="logo">hanezu<span class="accent">.</span></div></a>
+    <nav>
+      <ul>
+        <li><a href="../index.html#services">Services</a></li>
+        <li><a href="index.html">Works</a></li>
+        <li><a href="../index.html#about">About</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="label">3D / PROCEDURAL DESIGN SERIES</div>
+    <h1>kasane / komorebi</h1>
+    <p>古典日本の美意識をプログラマブルなデザインで再解釈する3D作品シリーズ。Blender Python でパラメトリックに生成し、3Dプリンタで実物化。「藝大の感性」と「実装力」が交差する、現代的なクラフトの実験。</p>
+  </div>
+</section>
+
+<section class="series">
+  <div class="container">
+
+    <!-- kasane -->
+    <article class="work-block">
+      <div class="work-meta">
+        <span>SERIES 01</span>
+        <span>·</span>
+        <span>2026</span>
+      </div>
+      <h2>kasane / 重ね</h2>
+      <p class="lead">平安時代の女性が着物を重ね着することで色彩を表現した「重ね色」の美意識を、3層の円盤で再解釈。意図的にずらして配置することで、上から見たときに月の満ち欠けや雪の降り重なりを思わせる微細な「ズレ」が生まれる。</p>
+      <div class="work-images">
+        <img src="3d-design/kasane_main.png" alt="kasane main view">
+        <img src="3d-design/kasane_front.png" alt="kasane front view">
+      </div>
+      <div class="specs">
+        <div><strong>Method</strong>Procedural Design (Python)</div>
+        <div><strong>Material</strong>PLA (3D Printed)</div>
+        <div><strong>Size</strong>Ø100 × H18 mm</div>
+        <div><strong>Render</strong>Blender Cycles 64spp</div>
+      </div>
+    </article>
+
+    <!-- komorebi -->
+    <article class="work-block">
+      <div class="work-meta">
+        <span>SERIES 02</span>
+        <span>·</span>
+        <span>2026</span>
+      </div>
+      <h2>komorebi / 木漏れ日</h2>
+      <p class="lead">「木漏れ日」という日本特有の現象 ― 木の葉の隙間から漏れる光が地面に落とす斑紋 ― をプロダクトとして再現。15個の穴を擬似ランダムにアルゴリズムで配置することで、自然の偶然性と人工の規則性が共存する表面を作り出す。穴を通して投影される光のパターンは、設置場所と時間によって変化する。</p>
+      <div class="work-images">
+        <img src="3d-design/komorebi_main.png" alt="komorebi main view">
+        <img src="3d-design/komorebi_top.png" alt="komorebi top view (pattern)">
+      </div>
+      <div class="specs">
+        <div><strong>Method</strong>Procedural + Boolean Operations</div>
+        <div><strong>Material</strong>Wood / PLA</div>
+        <div><strong>Size</strong>Ø100 × H6 mm</div>
+        <div><strong>Render</strong>Blender Cycles 64spp</div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section class="pipeline-section">
+  <div class="container">
+    <h2>制作パイプライン</h2>
+    <p>本シリーズは、Gemini Nano Banana Pro でのアイデアスケッチから 3Dプリント完成品 までを一気通貫で自動化したパイプラインで制作されています。一作品 1〜2 時間で「設計 → 印刷準備」まで完了。</p>
+    <div class="pipeline-flow">
+      <div class="pipeline-step">
+        <div class="num">1</div>
+        <h4>Concept</h4>
+        <p>古典文献リサーチ + AI スケッチ</p>
+      </div>
+      <div class="pipeline-step">
+        <div class="num">2</div>
+        <h4>Parametric</h4>
+        <p>Blender Python でメッシュ生成</p>
+      </div>
+      <div class="pipeline-step">
+        <div class="num">3</div>
+        <h4>Render</h4>
+        <p>Blender Cycles で高品質画像</p>
+      </div>
+      <div class="pipeline-step">
+        <div class="num">4</div>
+        <h4>Slice</h4>
+        <p>Creality Print → G-code</p>
+      </div>
+      <div class="pipeline-step">
+        <div class="num">5</div>
+        <h4>Print</h4>
+        <p>3Dプリンタで実物化</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">© 2026 hanezu design lab — Tokyo</div>
+</footer>
+
+</body>
+</html>
