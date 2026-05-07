@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Logo Samples — hanezu design lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600&family=DM+Serif+Display&family=Playfair+Display:wght@500;700&family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --hanezu: #C2403A;
+    --hanezu-bg: #FAF6F2;
+    --ink: #1A1A1A;
+    --ink-soft: #4A4A4A;
+    --ink-faint: #8A8A8A;
+    --line: #E8E0D6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', 'Noto Serif JP', sans-serif;
+    background: var(--hanezu-bg);
+    color: var(--ink);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+
+  header {
+    padding: 32px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  header .container { display: flex; justify-content: space-between; align-items: center; }
+  .brand {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 22px; font-weight: 700;
+  }
+  .brand .accent { color: var(--hanezu); }
+  nav ul { list-style: none; display: flex; gap: 36px; }
+  nav a { color: var(--ink-soft); text-decoration: none; font-size: 14px; }
+  nav a:hover { color: var(--hanezu); }
+
+  .hero {
+    padding: 80px 0 60px;
+  }
+  .label {
+    font-size: 12px;
+    color: var(--hanezu);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(32px, 4.5vw, 52px);
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+  .hero p {
+    font-size: 16px;
+    color: var(--ink-soft);
+    max-width: 620px;
+  }
+
+  .logo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 24px;
+    padding: 60px 0;
+  }
+  .logo-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .logo-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px -12px rgba(0,0,0,0.1);
+  }
+  .logo-display {
+    aspect-ratio: 4/3;
+    display: flex; align-items: center; justify-content: center;
+    border-bottom: 1px solid var(--line);
+  }
+  .logo-meta {
+    padding: 20px 24px;
+  }
+  .logo-name {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .logo-desc {
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+
+  /* Logo 1: Komorebi Café — handcrafted serif + leaf */
+  .logo-1 {
+    background: #F4EFE8;
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* Logo 2: Lumen — minimal geometric */
+  .logo-2 {
+    background: #0F0F14;
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* Logo 3: Hanezu (self) — Japanese serif + dot */
+  .logo-3 {
+    background: var(--hanezu-bg);
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* Logo 4: Studio Foglio — italic + leaf icon */
+  .logo-4 {
+    background: #EDF2EA;
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* Logo 5: ATELIER NOIR — bold sans + line motif */
+  .logo-5 {
+    background: #FFFFFF;
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* Logo 6: kasane (重ね) — Layered shape mark */
+  .logo-6 {
+    background: linear-gradient(135deg, #F7E8E4 0%, #FAF6F2 100%);
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  footer {
+    padding: 40px 0;
+    text-align: center;
+    color: var(--ink-faint);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    border-top: 1px solid var(--line);
+  }
+
+  @media (max-width: 720px) {
+    nav ul { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <a href="../index.html" style="text-decoration:none;color:inherit;"><div class="brand">hanezu<span class="accent">.</span></div></a>
+    <nav>
+      <ul>
+        <li><a href="../index.html#services">Services</a></li>
+        <li><a href="index.html">Works</a></li>
+        <li><a href="../index.html#about">About</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="label">LOGO SAMPLES</div>
+    <h1>ロゴ・ブランド設計の制作例</h1>
+    <p>業種・トーンに応じたロゴデザインのバリエーション。タイポグラフィ・余白・配色の調整を、藝大の基礎理論に基づいて行います。</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="logo-grid">
+
+      <!-- Logo 1: Komorebi Café -->
+      <div class="logo-card">
+        <div class="logo-display">
+          <div class="logo-1">
+            <svg width="280" height="160" viewBox="0 0 280 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Leaf icon -->
+              <path d="M140 30 Q120 38 110 50 Q105 60 110 70 Q115 78 130 78 Q145 78 152 68 Q158 58 152 48 Q146 38 140 30 Z" fill="#5C7A3F"/>
+              <!-- stem -->
+              <path d="M140 30 Q138 50 130 78" stroke="#5C7A3F" stroke-width="1.5" fill="none"/>
+              <!-- Brand name -->
+              <text x="140" y="115" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-size="36" font-style="italic" font-weight="500" fill="#3D2817">Komorebi</text>
+              <text x="140" y="138" text-anchor="middle" font-family="'Inter', sans-serif" font-size="9" letter-spacing="0.4em" fill="#5C7A3F">— A SMALL CAFE —</text>
+            </svg>
+          </div>
+        </div>
+        <div class="logo-meta">
+          <div class="logo-name">Komorebi Café</div>
+          <div class="logo-desc">手仕事感のあるイタリック体 × 葉のモチーフ。暖かい色調で個人喫茶のロゴに。</div>
+        </div>
+      </div>
+
+      <!-- Logo 2: Lumen -->
+      <div class="logo-card">
+        <div class="logo-display">
+          <div class="logo-2">
+            <svg width="280" height="160" viewBox="0 0 280 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Geometric mark: stacked rounded squares forming "L" -->
+              <rect x="100" y="40" width="32" height="32" rx="6" fill="#7C5CFF"/>
+              <rect x="100" y="76" width="32" height="32" rx="6" fill="#B8A4FF"/>
+              <rect x="136" y="76" width="32" height="32" rx="6" fill="#7C5CFF" opacity="0.6"/>
+              <!-- Brand name -->
+              <text x="180" y="80" font-family="'Outfit', sans-serif" font-size="38" font-weight="700" fill="#F0F0F5">Lumen</text>
+              <text x="180" y="100" font-family="'Inter', sans-serif" font-size="9" letter-spacing="0.3em" fill="#8A8A9A">AI BUSINESS OS</text>
+            </svg>
+          </div>
+        </div>
+        <div class="logo-meta">
+          <div class="logo-name">Lumen</div>
+          <div class="logo-desc">グラデーション × ジオメトリック。テック系SaaS向けの先進性あるマーク。</div>
+        </div>
+      </div>
+
+      <!-- Logo 3: Hanezu (self brand) -->
+      <div class="logo-card">
+        <div class="logo-display">
+          <div class="logo-3">
+            <svg width="280" height="160" viewBox="0 0 280 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Hanezu mark: traditional ink dot with subtle red echo -->
+              <circle cx="140" cy="60" r="14" fill="#1A1A1A"/>
+              <circle cx="148" cy="56" r="3" fill="#C2403A"/>
+              <!-- Brand text -->
+              <text x="140" y="105" text-anchor="middle" font-family="'Noto Serif JP', serif" font-size="34" font-weight="700" fill="#1A1A1A">hanezu</text>
+              <text x="140" y="128" text-anchor="middle" font-family="'Inter', sans-serif" font-size="9" letter-spacing="0.4em" fill="#8A8A8A">DESIGN LAB · TOKYO</text>
+            </svg>
+          </div>
+        </div>
+        <div class="logo-meta">
+          <div class="logo-name">hanezu design lab</div>
+          <div class="logo-desc">和文セリフ × インクドット × 朱色のアクセント。古典×現代の自社ブランド。</div>
+        </div>
+      </div>
+
+      <!-- Logo 4: Studio Foglio -->
+      <div class="logo-card">
+        <div class="logo-display">
+          <div class="logo-4">
+            <svg width="280" height="160" viewBox="0 0 280 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Leaf F monogram -->
+              <g transform="translate(80, 35)">
+                <path d="M0 0 L40 0 M0 0 L0 60 M0 30 L25 30" stroke="#5C7A3F" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <path d="M50 35 Q60 25 70 35 Q70 50 55 50 Q40 50 50 35 Z" fill="#5C7A3F"/>
+              </g>
+              <text x="140" y="125" text-anchor="middle" font-family="'Playfair Display', serif" font-size="28" font-style="italic" font-weight="500" fill="#2A3520">Studio Foglio</text>
+              <text x="140" y="145" text-anchor="middle" font-family="'Inter', sans-serif" font-size="9" letter-spacing="0.3em" fill="#5C7A3F">BOTANICAL DESIGN</text>
+            </svg>
+          </div>
+        </div>
+        <div class="logo-meta">
+          <div class="logo-name">Studio Foglio</div>
+          <div class="logo-desc">モノグラム × 葉の意匠。植物・自然系ブランドのエレガントな佇まい。</div>
+        </div>
+      </div>
+
+      <!-- Logo 5: ATELIER NOIR -->
+      <div class="logo-card">
+        <div class="logo-display">
+          <div class="logo-5">
+            <svg width="280" height="160" viewBox="0 0 280 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Bold horizontal line motif -->
+              <line x1="40" y1="60" x2="240" y2="60" stroke="#1A1A1A" stroke-width="2"/>
+              <text x="140" y="98" text-anchor="middle" font-family="'DM Serif Display', serif" font-size="42" fill="#1A1A1A" letter-spacing="0.05em">ATELIER</text>
+              <line x1="40" y1="115" x2="240" y2="115" stroke="#1A1A1A" stroke-width="0.5"/>
+              <text x="140" y="134" text-anchor="middle" font-family="'Inter', sans-serif" font-size="11" letter-spacing="0.6em" fill="#1A1A1A">— N O I R —</text>
+            </svg>
+          </div>
+        </div>
+        <div class="logo-meta">
+          <div class="logo-name">ATELIER NOIR</div>
+          <div class="logo-desc">セリフ大文字 × ライン構成。ファッション・アート系ブランドの格式。</div>
+        </div>
+      </div>
+
+      <!-- Logo 6: kasane -->
+      <div class="logo-card">
+        <div class="logo-display">
+          <div class="logo-6">
+            <svg width="280" height="160" viewBox="0 0 280 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Layered overlapping circles -->
+              <circle cx="115" cy="65" r="22" fill="#C2403A" opacity="0.4"/>
+              <circle cx="135" cy="65" r="22" fill="#C2403A" opacity="0.5"/>
+              <circle cx="155" cy="65" r="22" fill="#C2403A" opacity="0.7"/>
+              <text x="140" y="115" text-anchor="middle" font-family="'Noto Serif JP', serif" font-size="32" font-weight="600" fill="#1A1A1A">kasane</text>
+              <text x="140" y="135" text-anchor="middle" font-family="'Noto Serif JP', serif" font-size="14" font-weight="400" fill="#8A8A8A">— 重ね —</text>
+            </svg>
+          </div>
+        </div>
+        <div class="logo-meta">
+          <div class="logo-name">kasane / 重ね</div>
+          <div class="logo-desc">重なりの抽象表現 × 和文セリフ。コンセプチュアルな個人ブランド向け。</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">© 2026 hanezu design lab — Logo samples for portfolio</div>
+</footer>
+
+</body>
+</html>
