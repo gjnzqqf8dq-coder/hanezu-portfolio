@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>kasane atelier — AIアシスタント内蔵LP</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #2A2A2A;
+    --accent: #C2403A;
+    --bg: #FAF6F2;
+    --surface: #FFFFFF;
+    --line: #E8E0D6;
+    --text: #1A1A1A;
+    --text-soft: #5A5A5A;
+    --text-faint: #999;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', 'Noto Serif JP', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+
+  /* Nav */
+  nav { padding: 24px 0; border-bottom: 1px solid var(--line); }
+  nav .container { display: flex; justify-content: space-between; align-items: center; }
+  .logo { font-family: 'Noto Serif JP', serif; font-size: 22px; font-weight: 700; }
+  .logo .accent { color: var(--accent); }
+  .nav-links { list-style: none; display: flex; gap: 32px; }
+  .nav-links a { color: var(--text-soft); text-decoration: none; font-size: 14px; }
+
+  /* Hero */
+  .hero { padding: 100px 0; }
+  .hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px; align-items: center; }
+  .hero h1 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(36px, 5vw, 56px);
+    line-height: 1.2;
+    margin-bottom: 24px;
+    font-weight: 700;
+  }
+  .hero p {
+    font-size: 17px;
+    color: var(--text-soft);
+    margin-bottom: 32px;
+  }
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn {
+    display: inline-block;
+    padding: 14px 28px;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 14px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: #A53530; }
+  .btn-ghost { border: 1px solid var(--text); color: var(--text); background: transparent; }
+  .btn-ghost:hover { background: var(--text); color: #fff; }
+
+  /* Hero Image */
+  .hero-image {
+    aspect-ratio: 4/5;
+    background: linear-gradient(135deg, #E8C4B8 0%, #C2403A 100%);
+    border-radius: 12px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero-image::before {
+    content: '陶';
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(80px, 15vw, 200px);
+    color: rgba(255,255,255,0.3);
+    font-weight: 700;
+  }
+
+  /* Sections */
+  section.block { padding: 100px 0; border-top: 1px solid var(--line); }
+  .section-label {
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(32px, 4vw, 44px);
+    margin-bottom: 24px;
+    font-weight: 700;
+  }
+  .section-lead {
+    font-size: 16px;
+    color: var(--text-soft);
+    max-width: 640px;
+    margin-bottom: 48px;
+  }
+
+  /* Products */
+  .products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  .product {
+    padding: 28px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+  }
+  .product-image {
+    aspect-ratio: 1;
+    background: var(--bg);
+    border-radius: 6px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 64px;
+    color: var(--accent);
+    opacity: 0.7;
+  }
+  .product h3 { font-size: 18px; margin-bottom: 6px; }
+  .product .price { color: var(--accent); font-weight: 600; margin-bottom: 16px; }
+  .product p { color: var(--text-soft); font-size: 14px; }
+
+  /* Chatbot */
+  .chatbot-toggle {
+    position: fixed;
+    bottom: 24px; right: 24px;
+    width: 60px; height: 60px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(194, 64, 58, 0.4);
+    z-index: 100;
+    font-size: 24px;
+    transition: all 0.2s;
+  }
+  .chatbot-toggle:hover { transform: scale(1.05); }
+  .chatbot-toggle.active { display: none; }
+
+  .chatbot {
+    position: fixed;
+    bottom: 24px; right: 24px;
+    width: min(380px, calc(100vw - 48px));
+    height: 540px;
+    background: var(--surface);
+    border-radius: 16px;
+    box-shadow: 0 20px 60px -10px rgba(0,0,0,0.25);
+    display: none;
+    flex-direction: column;
+    z-index: 100;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .chatbot.active { display: flex; }
+  .chatbot-header {
+    padding: 20px;
+    background: var(--accent);
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .chatbot-header h3 { font-size: 15px; font-weight: 600; }
+  .chatbot-header .subtitle { font-size: 11px; opacity: 0.8; margin-top: 2px; }
+  .chatbot-close {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: #fff;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+  }
+  .chatbot-messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background: var(--bg);
+  }
+  .msg {
+    margin-bottom: 12px;
+    max-width: 85%;
+  }
+  .msg.bot {
+    background: var(--surface);
+    padding: 12px 14px;
+    border-radius: 12px 12px 12px 0;
+    font-size: 14px;
+    line-height: 1.5;
+    border: 1px solid var(--line);
+  }
+  .msg.user {
+    background: var(--accent);
+    color: #fff;
+    padding: 12px 14px;
+    border-radius: 12px 12px 0 12px;
+    font-size: 14px;
+    margin-left: auto;
+    line-height: 1.5;
+  }
+  .msg-time {
+    font-size: 10px;
+    color: var(--text-faint);
+    margin-top: 4px;
+    padding: 0 4px;
+  }
+  .quick-replies {
+    padding: 8px 12px;
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    max-height: 100px;
+    overflow-y: auto;
+  }
+  .quick-reply {
+    padding: 8px 12px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    font-size: 12px;
+    cursor: pointer;
+    color: var(--text);
+    font-family: inherit;
+    line-height: 1.3;
+  }
+  .quick-reply:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .typing {
+    background: var(--surface);
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    display: inline-block;
+    font-size: 14px;
+    color: var(--text-faint);
+  }
+  .typing::after {
+    content: '...';
+    animation: dots 1.4s infinite;
+  }
+  @keyframes dots {
+    0%, 20% { content: '.'; }
+    40% { content: '..'; }
+    60%, 100% { content: '...'; }
+  }
+
+  /* Demo info */
+  .demo-info {
+    margin: 80px 0 40px;
+    padding: 32px;
+    background: var(--surface);
+    border: 1px dashed var(--accent);
+    border-radius: 8px;
+    color: var(--text-soft);
+    font-size: 14px;
+  }
+  .demo-info h3 {
+    color: var(--accent);
+    margin-bottom: 12px;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .demo-info code {
+    background: var(--bg);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+  }
+
+  footer {
+    padding: 40px 0;
+    text-align: center;
+    color: var(--text-faint);
+    font-size: 12px;
+    border-top: 1px solid var(--line);
+  }
+
+  @media (max-width: 720px) {
+    .nav-links { display: none; }
+    .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <div class="logo">kasane <span class="accent">atelier</span></div>
+    <ul class="nav-links">
+      <li><a href="#products">Products</a></li>
+      <li><a href="#story">Story</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <h1>陶器のひとつひとつに<br>物語を重ねる。</h1>
+        <p>kasane atelier は、藝大デザイン科出身のクラフター集団が運営する小さな陶芸工房。日本の伝統的な「重ね色」をモチーフに、3Dプリント技術と手仕事を融合した現代の陶器を制作しています。</p>
+        <div class="cta-row">
+          <a href="#products" class="btn btn-primary">商品を見る →</a>
+          <button class="btn btn-ghost" onclick="openChatbot()">AIアシスタントに相談</button>
+        </div>
+      </div>
+      <div class="hero-image"></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="products">
+  <div class="container">
+    <div class="section-label">PRODUCTS</div>
+    <h2 class="section-title">作品ラインナップ</h2>
+    <p class="section-lead">藝大の構成感覚 × 3Dプリント技術。すべて手作業で仕上げられる、世界に一つしかない陶器。</p>
+
+    <div class="products">
+      <div class="product">
+        <div class="product-image">器</div>
+        <h3>kasane bowl</h3>
+        <div class="price">¥18,000</div>
+        <p>3層の重ねを意匠化したミニマルな器。料理の彩りを引き立てる、朱色のグラデーション。</p>
+      </div>
+      <div class="product">
+        <div class="product-image">皿</div>
+        <h3>komorebi plate</h3>
+        <div class="price">¥12,000</div>
+        <p>木漏れ日をイメージした穴あき小皿。透ける光でテーブルに斑紋を描く、ライティングオブジェ的な存在。</p>
+      </div>
+      <div class="product">
+        <div class="product-image">壺</div>
+        <h3>wabi vase</h3>
+        <div class="price">¥28,000</div>
+        <p>不完全さの美「侘び」を体現した一輪挿し。あえて非対称な造形で、生けた花の表情を際立たせる。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="story">
+  <div class="container">
+    <div class="section-label">STORY</div>
+    <h2 class="section-title">物語のある陶器を、<br>あなたの食卓に。</h2>
+    <p class="section-lead" style="font-size: 17px; max-width: 720px; line-height: 1.9;">
+      私たちは、藝大デザイン科を卒業したクラフター3人で立ち上げた小さな工房です。日本の古典的な美意識「重ね色」「侘び寂び」をモチーフに、現代のデジタルファブリケーション技術で再解釈した陶器を制作しています。<br><br>
+      Blender Python でパラメトリック設計し、3Dプリンタでマスター型を作り、伝統的な釉薬で仕上げる。古典 × 現代の橋渡しを、一つひとつ丁寧にかたちにしています。
+    </p>
+  </div>
+</section>
+
+<section class="container">
+  <div class="demo-info">
+    <h3>このページについて</h3>
+    <p>これは <strong>AI チャットボット内蔵 LP のサンプル</strong> です。右下のチャットボタンから動作確認できます。実装は <code>HTML / CSS / JavaScript</code> のみ（軽量・高速）。本番環境では <code>Claude API / Gemini API / OpenAI API</code> 接続でフリーフォーム会話・FAQ自動応答・予約受付・自動見積りまで拡張可能です。</p>
+    <p>ご依頼: ココナラ「藝大生がAI機能付きLPを組み込み制作します」サービス（オープン記念価格 18,000円〜）</p>
+  </div>
+</section>
+
+<footer>
+  <div class="container">© 2026 kasane atelier — Sample LP by hanezu design lab</div>
+</footer>
+
+<!-- Chatbot Toggle -->
+<button class="chatbot-toggle" id="chatbotToggle" onclick="openChatbot()">💬</button>
+
+<!-- Chatbot UI -->
+<div class="chatbot" id="chatbot">
+  <div class="chatbot-header">
+    <div>
+      <h3>AIコンシェルジュ</h3>
+      <div class="subtitle">kasane atelier ・ 平均応答 1秒</div>
+    </div>
+    <button class="chatbot-close" onclick="closeChatbot()">×</button>
+  </div>
+  <div class="chatbot-messages" id="messages"></div>
+  <div class="quick-replies" id="quickReplies"></div>
+</div>
+
+<script>
+const flow = {
+  start: {
+    msg: "こんにちは！kasane atelier の AIコンシェルジュです。どのようなご相談でしょうか？",
+    replies: [
+      { text: "商品について知りたい", next: "products" },
+      { text: "注文方法を聞きたい", next: "order" },
+      { text: "贈り物におすすめは？", next: "gift" },
+      { text: "工房を見学できる？", next: "visit" },
+    ]
+  },
+  products: {
+    msg: "現在、kasane bowl（¥18,000）/ komorebi plate（¥12,000）/ wabi vase（¥28,000）の3商品を展開しています。それぞれ藝大デザイン科のクラフターが、3Dプリント技術と手仕事を組み合わせて制作した一点物です。どれが気になりますか？",
+    replies: [
+      { text: "kasane bowl について", next: "kasane_detail" },
+      { text: "komorebi plate について", next: "komorebi_detail" },
+      { text: "wabi vase について", next: "wabi_detail" },
+      { text: "メニューに戻る", next: "start" },
+    ]
+  },
+  kasane_detail: {
+    msg: "kasane bowl は朱色（hanezu）のグラデーションが特徴の器です。直径15cm、高さ7cm。3層の重ね構造を意匠化し、和食・洋食どちらにも合います。電子レンジ・食洗機対応。納期は受注後3週間です。",
+    replies: [
+      { text: "予約方法", next: "order" },
+      { text: "他の商品", next: "products" },
+      { text: "メニューに戻る", next: "start" },
+    ]
+  },
+  komorebi_detail: {
+    msg: "komorebi plate は穴の空いた木漏れ日モチーフの小皿です。直径10cm。光を透かしてテーブルに斑紋を描く、装飾性の高い一品。観賞用・サラダ皿・キャンドルスタンドとしても使えます。",
+    replies: [
+      { text: "予約方法", next: "order" },
+      { text: "他の商品", next: "products" },
+      { text: "メニューに戻る", next: "start" },
+    ]
+  },
+  wabi_detail: {
+    msg: "wabi vase は「侘び」の美意識を体現した一輪挿しです。あえて不完全な非対称造形で、生けた花の表情を引き立てる役割。高さ20cm、口径3cm。乾燥した枝・季節の小さな花がよく合います。",
+    replies: [
+      { text: "予約方法", next: "order" },
+      { text: "他の商品", next: "products" },
+      { text: "メニューに戻る", next: "start" },
+    ]
+  },
+  order: {
+    msg: "ご注文はオンラインフォーム（このページ下部）または電話（03-XXXX-XXXX）で承っています。すべて受注生産で、納期は3〜4週間。送料は全国一律¥1,500、3万円以上で送料無料です。",
+    replies: [
+      { text: "贈り物の場合は？", next: "gift" },
+      { text: "海外発送できる？", next: "shipping" },
+      { text: "メニューに戻る", next: "start" },
+    ]
+  },
+  gift: {
+    msg: "贈り物には wabi vase（一輪挿し）が一番人気です。お祝い・引越しの内祝い・誕生日など幅広く対応。木箱包装（+¥2,000）と手書きメッセージカード（無料）もご用意できます。",
+    replies: [
+      { text: "wabi vase 詳細", next: "wabi_detail" },
+      { text: "他の商品", next: "products" },
+      { text: "メニューに戻る", next: "start" },
+    ]
+  },
+  visit: {
+    msg: "工房は東京・谷中にあり、土曜日のみ予約制で見学いただけます。ろくろ体験ワークショップ（¥6,500・3時間）も毎月開催中。最新スケジュールはこちら: https://kasane-atelier.example/workshop",
+    replies: [
+      { text: "メニューに戻る", next: "start" },
+    ]
+  },
+  shipping: {
+    msg: "海外発送は要相談ですが、アジア圏（韓国・台湾・香港・シンガポール）への発送実績があります。送料・関税は購入者負担となります。詳細はメッセージフォームよりお問い合わせください。",
+    replies: [
+      { text: "メニューに戻る", next: "start" },
+    ]
+  },
+};
+
+const messagesEl = document.getElementById('messages');
+const quickRepliesEl = document.getElementById('quickReplies');
+
+function openChatbot() {
+  document.getElementById('chatbot').classList.add('active');
+  document.getElementById('chatbotToggle').classList.add('active');
+  if (messagesEl.children.length === 0) {
+    sendBotMessage(flow.start.msg, flow.start.replies);
+  }
+}
+function closeChatbot() {
+  document.getElementById('chatbot').classList.remove('active');
+  document.getElementById('chatbotToggle').classList.remove('active');
+}
+
+function appendMessage(text, type) {
+  const div = document.createElement('div');
+  div.className = 'msg ' + type;
+  div.textContent = text;
+  messagesEl.appendChild(div);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+  return div;
+}
+
+function showTyping() {
+  const div = document.createElement('div');
+  div.id = 'typing';
+  div.innerHTML = '<div class="typing">...</div>';
+  messagesEl.appendChild(div);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+function hideTyping() {
+  const t = document.getElementById('typing');
+  if (t) t.remove();
+}
+
+function setQuickReplies(replies) {
+  quickRepliesEl.innerHTML = '';
+  if (!replies) return;
+  replies.forEach(r => {
+    const btn = document.createElement('button');
+    btn.className = 'quick-reply';
+    btn.textContent = r.text;
+    btn.onclick = () => onUserChoose(r);
+    quickRepliesEl.appendChild(btn);
+  });
+}
+
+function sendBotMessage(text, replies) {
+  showTyping();
+  setQuickReplies([]);
+  setTimeout(() => {
+    hideTyping();
+    appendMessage(text, 'bot');
+    setQuickReplies(replies);
+  }, 800 + Math.random() * 600);
+}
+
+function onUserChoose(reply) {
+  appendMessage(reply.text, 'user');
+  setQuickReplies([]);
+  const next = flow[reply.next];
+  if (next) {
+    setTimeout(() => sendBotMessage(next.msg, next.replies), 200);
+  }
+}
+</script>
+
+</body>
+</html>
