@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing — hanezu design lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --hanezu: #C2403A;
+    --hanezu-bg: #FAF6F2;
+    --ink: #1A1A1A;
+    --ink-soft: #4A4A4A;
+    --ink-faint: #8A8A8A;
+    --line: #E8E0D6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', 'Noto Serif JP', sans-serif;
+    background: var(--hanezu-bg);
+    color: var(--ink);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+
+  header {
+    padding: 32px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  header .container { display: flex; justify-content: space-between; align-items: center; }
+  .logo { font-family: 'Noto Serif JP', serif; font-size: 22px; font-weight: 700; }
+  .logo .accent { color: var(--hanezu); }
+  nav ul { list-style: none; display: flex; gap: 36px; }
+  nav a { color: var(--ink-soft); text-decoration: none; font-size: 14px; }
+
+  .hero {
+    padding: 100px 0 60px;
+    text-align: center;
+  }
+  .hero .label {
+    font-size: 12px; color: var(--hanezu);
+    letter-spacing: 0.2em; text-transform: uppercase;
+    font-weight: 600; margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(36px, 5vw, 56px);
+    line-height: 1.2;
+    margin-bottom: 24px;
+    font-weight: 700;
+  }
+  .hero p {
+    font-size: 17px;
+    color: var(--ink-soft);
+    max-width: 580px;
+    margin: 0 auto;
+  }
+
+  .pricing-table {
+    padding: 60px 0 100px;
+  }
+  .price-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 40px;
+    margin-bottom: 24px;
+    transition: all 0.2s;
+  }
+  .price-card:hover {
+    border-color: var(--hanezu);
+    transform: translateY(-2px);
+  }
+  .price-card.featured {
+    border: 2px solid var(--hanezu);
+    background: linear-gradient(180deg, #fff 0%, #FFF8F4 100%);
+  }
+  .price-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+  .price-name {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .price-tagline {
+    color: var(--ink-soft);
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+  .price-features {
+    list-style: none;
+    margin-bottom: 16px;
+  }
+  .price-features li {
+    padding: 8px 0;
+    color: var(--ink-soft);
+    font-size: 14px;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .price-features li::before {
+    content: '◆';
+    color: var(--hanezu);
+    font-size: 12px;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+  .price-amount {
+    font-family: 'Noto Serif JP', serif;
+    text-align: right;
+  }
+  .price-amount .from { font-size: 12px; color: var(--ink-faint); display: block; margin-bottom: 4px; }
+  .price-amount .number {
+    font-size: clamp(36px, 4vw, 48px);
+    font-weight: 700;
+    color: var(--hanezu);
+    line-height: 1;
+  }
+  .price-amount .yen { font-size: 20px; }
+  .price-amount .term { font-size: 13px; color: var(--ink-soft); margin-top: 8px; display: block; }
+  .badge {
+    display: inline-block;
+    background: var(--hanezu);
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 11px;
+    margin-bottom: 12px;
+    letter-spacing: 0.1em;
+  }
+  .options {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line);
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .options strong { color: var(--ink); }
+
+  .note {
+    padding: 60px 0;
+    background: #fff;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .note h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 28px;
+    margin-bottom: 24px;
+  }
+  .note ul {
+    list-style: none;
+    color: var(--ink-soft);
+  }
+  .note li {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  footer {
+    padding: 40px 0;
+    text-align: center;
+    color: var(--ink-faint);
+    font-size: 12px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <a href="index.html" style="text-decoration:none;color:inherit;"><div class="logo">hanezu<span class="accent">.</span></div></a>
+    <nav>
+      <ul>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="works/">Works</a></li>
+        <li><a href="pricing.html" style="color:var(--hanezu);">Pricing</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="label">PRICING</div>
+    <h1>料金表</h1>
+    <p>すべて藝大デザイン × AI実装で、相場の50〜70%でご提供しております。<br>下記はオープン記念価格。実績10件達成後は値上げ予定。</p>
+  </div>
+</section>
+
+<section class="pricing-table">
+  <div class="container">
+
+    <!-- AI機能LP -->
+    <div class="price-card featured">
+      <div class="badge">最強の差別化</div>
+      <div class="price-grid">
+        <div>
+          <div class="price-name">AI機能付きLP制作</div>
+          <div class="price-tagline">AI診断・チャットボット・画像生成内蔵LPで滞在時間UP</div>
+          <ul class="price-features">
+            <li>1ページ完結のLP（HTML/CSS/JavaScript）</li>
+            <li>AI機能 1個 内蔵（診断 / チャットボット / 画像生成 等）</li>
+            <li>レスポンシブ対応（PC・タブレット・スマホ）</li>
+            <li>OGP・ファビコン込み</li>
+            <li>API キー差し替え手順マニュアル</li>
+          </ul>
+          <div class="options">
+            <strong>オプション</strong>: AI機能 追加1個 +5,000円 / プロンプト調整サポート（30日）+5,000円
+          </div>
+        </div>
+        <div class="price-amount">
+          <span class="from">FROM</span>
+          <span class="number">¥18,000<span class="yen">〜</span></span>
+          <span class="term">納期 7〜10日</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- LP制作 -->
+    <div class="price-card">
+      <div class="price-grid">
+        <div>
+          <div class="price-name">LP / HP 制作</div>
+          <div class="price-tagline">藝大デザイン × HTML/CSSで、テンプレ感のないLP</div>
+          <ul class="price-features">
+            <li>1ページ完結のLP（HTML/CSS/JavaScript）</li>
+            <li>レスポンシブ対応</li>
+            <li>お問い合わせフォーム（Google Form 連携 or mailto）</li>
+            <li>修正2回まで無料</li>
+            <li>商用利用OK</li>
+          </ul>
+          <div class="options">
+            <strong>オプション</strong>: AIイラスト生成 +1,500円 / 独自フォーム +3,000円 / SEO設定 +2,000円
+          </div>
+        </div>
+        <div class="price-amount">
+          <span class="from">FROM</span>
+          <span class="number">¥15,000<span class="yen">〜</span></span>
+          <span class="term">納期 5〜7日</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- AIエージェント -->
+    <div class="price-card">
+      <div class="price-grid">
+        <div>
+          <div class="price-name">AIエージェント業務自動化</div>
+          <div class="price-tagline">Notion / Telegram / Claude API 連携で日常業務を自動化</div>
+          <ul class="price-features">
+            <li>業務ヒアリング → 自動化設計 → 実装 → 引き継ぎ</li>
+            <li>使用技術: Claude / Gemini / Notion / GAS / Python / Node.js</li>
+            <li>運用マニュアル PDF + Loom 引き継ぎ動画</li>
+            <li>30日間 無料サポート</li>
+          </ul>
+          <div class="options">
+            <strong>オプション</strong>: 月額運用サポート +5,000円/月 / 業務2件目追加 +5,000円
+          </div>
+        </div>
+        <div class="price-amount">
+          <span class="from">FROM</span>
+          <span class="number">¥8,000<span class="yen">〜</span></span>
+          <span class="term">納期 5〜7日</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ロゴ -->
+    <div class="price-card">
+      <div class="price-grid">
+        <div>
+          <div class="price-name">ロゴデザイン</div>
+          <div class="price-tagline">3案ご提案・採用案は修正無制限</div>
+          <ul class="price-features">
+            <li>3案デザイン提案</li>
+            <li>採用案は修正無制限</li>
+            <li>納品形式: AI / SVG / PNG / JPG</li>
+            <li>カラー版・モノクロ版</li>
+            <li>商用利用OK・著作権譲渡</li>
+          </ul>
+          <div class="options">
+            <strong>オプション</strong>: 名刺デザイン +3,000円 / ガイドライン作成 +2,000円
+          </div>
+        </div>
+        <div class="price-amount">
+          <span class="from">FROM</span>
+          <span class="number">¥5,000<span class="yen">〜</span></span>
+          <span class="term">納期 5日</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notion -->
+    <div class="price-card">
+      <div class="price-grid">
+        <div>
+          <div class="price-name">Notion 個人管理テンプレ構築</div>
+          <div class="price-tagline">完全カスタムテンプレート + 使い方ガイド</div>
+          <ul class="price-features">
+            <li>あなたの用途に合わせたカスタムテンプレ</li>
+            <li>ダッシュボード + データベース連携</li>
+            <li>複製リンクで即利用可</li>
+            <li>使い方ガイドPDF付き</li>
+          </ul>
+          <div class="options">
+            <strong>オプション</strong>: 動画解説 +2,000円 / Notion API自動化 +5,000円〜
+          </div>
+        </div>
+        <div class="price-amount">
+          <span class="from">FROM</span>
+          <span class="number">¥3,000<span class="yen">〜</span></span>
+          <span class="term">納期 4日</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- YouTubeサムネ -->
+    <div class="price-card">
+      <div class="price-grid">
+        <div>
+          <div class="price-name">YouTubeサムネイル制作</div>
+          <div class="price-tagline">構図・配色・タイポを最適化、CTRを意識した5枚パック</div>
+          <ul class="price-features">
+            <li>5枚セット（テイスト統一 or バリエーション選択）</li>
+            <li>1280×720px（YouTube推奨サイズ）</li>
+            <li>テキスト・装飾込み</li>
+            <li>PSDデータも納品</li>
+          </ul>
+          <div class="options">
+            <strong>オプション</strong>: 月額契約（月10枚）8,000円/月 / 追加5枚 +2,000円
+          </div>
+        </div>
+        <div class="price-amount">
+          <span class="from">FROM</span>
+          <span class="number">¥2,500<span class="yen">〜</span></span>
+          <span class="term">納期 4日</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- AIイラスト -->
+    <div class="price-card">
+      <div class="price-grid">
+        <div>
+          <div class="price-name">AIイラスト 50枚パック</div>
+          <div class="price-tagline">藝大生監修・テイスト統一・商用OK</div>
+          <ul class="price-features">
+            <li>50枚まとめてテイスト統一</li>
+            <li>解像度 1024×1024 以上</li>
+            <li>PNG / JPG 選択可</li>
+            <li>商用利用OK・著作権譲渡</li>
+          </ul>
+          <div class="options">
+            <strong>オプション</strong>: 追加50枚 +1,000円 / 即日対応 +500円
+          </div>
+        </div>
+        <div class="price-amount">
+          <span class="from">FROM</span>
+          <span class="number">¥2,000<span class="yen">〜</span></span>
+          <span class="term">納期 3日</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="note">
+  <div class="container">
+    <h2>料金についての注意</h2>
+    <ul>
+      <li>記載価格はすべて「オープン記念価格」です。実績10件達成後は値上げ予定。</li>
+      <li>API利用料・サーバー代等の外部サービス料金は別途お客様ご負担となります（最安構成も提示）</li>
+      <li>修正回数は各サービスの規定通り。それ以降は1回 +1,500〜3,000円</li>
+      <li>緊急対応・即日納品はオプション料金が発生します</li>
+      <li>商用利用OK / 著作権譲渡対応 / 二次配布NG が基本ライセンスです</li>
+      <li>リピーター様は5%OFF（2回目以降）</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="container">© 2026 hanezu design lab — Tokyo</div>
+</footer>
+
+</body>
+</html>

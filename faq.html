@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ — hanezu design lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --hanezu: #C2403A;
+    --hanezu-bg: #FAF6F2;
+    --ink: #1A1A1A;
+    --ink-soft: #4A4A4A;
+    --ink-faint: #8A8A8A;
+    --line: #E8E0D6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', 'Noto Serif JP', sans-serif;
+    background: var(--hanezu-bg);
+    color: var(--ink);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 800px; margin: 0 auto; padding: 0 32px; }
+
+  header {
+    padding: 32px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  header .container { display: flex; justify-content: space-between; align-items: center; max-width: 1100px; }
+  .logo { font-family: 'Noto Serif JP', serif; font-size: 22px; font-weight: 700; }
+  .logo .accent { color: var(--hanezu); }
+  nav ul { list-style: none; display: flex; gap: 36px; }
+  nav a { color: var(--ink-soft); text-decoration: none; font-size: 14px; }
+
+  .hero {
+    padding: 100px 0 60px;
+    text-align: center;
+  }
+  .hero .label {
+    font-size: 12px; color: var(--hanezu);
+    letter-spacing: 0.2em; text-transform: uppercase;
+    font-weight: 600; margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(36px, 5vw, 48px);
+    margin-bottom: 24px;
+    font-weight: 700;
+  }
+  .hero p {
+    font-size: 16px;
+    color: var(--ink-soft);
+  }
+
+  .faq-list {
+    padding: 40px 0 100px;
+  }
+  .category {
+    margin-bottom: 64px;
+  }
+  .category-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 22px;
+    color: var(--hanezu);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--hanezu);
+  }
+  .faq-item {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 24px 28px;
+    margin-bottom: 12px;
+    transition: all 0.2s;
+  }
+  .faq-item:hover {
+    border-color: var(--hanezu);
+  }
+  .faq-q {
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--ink);
+    margin-bottom: 12px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .faq-q::before {
+    content: 'Q.';
+    color: var(--hanezu);
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .faq-a {
+    color: var(--ink-soft);
+    font-size: 14px;
+    line-height: 1.8;
+    padding-left: 28px;
+  }
+
+  .contact {
+    padding: 80px 0;
+    background: #fff;
+    text-align: center;
+    border-top: 1px solid var(--line);
+  }
+  .contact h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 32px;
+    margin-bottom: 16px;
+  }
+  .contact p {
+    color: var(--ink-soft);
+    margin-bottom: 24px;
+  }
+  .btn {
+    display: inline-block;
+    padding: 14px 32px;
+    background: var(--hanezu);
+    color: #fff;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+  }
+
+  footer {
+    padding: 40px 0;
+    text-align: center;
+    color: var(--ink-faint);
+    font-size: 12px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <a href="index.html" style="text-decoration:none;color:inherit;"><div class="logo">hanezu<span class="accent">.</span></div></a>
+    <nav>
+      <ul>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="works/">Works</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="faq.html" style="color:var(--hanezu);">FAQ</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="label">FAQ</div>
+    <h1>よくあるご質問</h1>
+    <p>ご相談・お見積もりは無料です。お気軽にお問い合わせください。</p>
+  </div>
+</section>
+
+<section class="faq-list">
+  <div class="container">
+
+    <!-- 全般 -->
+    <div class="category">
+      <h2 class="category-title">全般について</h2>
+
+      <div class="faq-item">
+        <div class="faq-q">本当に藝大の現役学生ですか？</div>
+        <div class="faq-a">はい、東京藝術大学美術学部デザイン科に在籍中です。学生証の確認は購入後ご希望があれば可能です。</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">なぜこんなに安いのですか？</div>
+        <div class="faq-a">学生個人での運営により、固定費が圧倒的に低いことと、AIツールを最大限活用することで作業時間を圧縮しています。実績作りのオープン記念価格でご提供中です。実績10件達成後は値上げ予定。</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">学生さんで大丈夫ですか？</div>
+        <div class="faq-a">藝大デザイン科で培ったタイポグラフィ・色彩理論・構図の基礎力に加え、Claude / Gemini API での実装力もあります。実例は <a href="works/" style="color:var(--hanezu);">Works ページ</a> でご確認ください。</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">作業はどこからされてますか？</div>
+        <div class="faq-a">主に東京の自宅から。コミュニケーションはココナラ・Lancers のメッセージ機能、または専用フォーム経由でお願いしております。</div>
+      </div>
+    </div>
+
+    <!-- 制作プロセス -->
+    <div class="category">
+      <h2 class="category-title">制作プロセス</h2>
+
+      <div class="faq-item">
+        <div class="faq-q">どのくらいで納品されますか？</div>
+        <div class="faq-a">サービスごとに異なります（3〜14日）。各サービスの「お届け日数」をご確認ください。緊急対応はオプション料金で承ります。</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">修正は何回まで無料ですか？</div>
+        <div class="faq-a">サービスごとに規定があります。LP制作なら2回まで無料、ロゴなら採用案決定後は無制限。それ以降は1回 +1,500円〜3,000円となります。</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">途中経過は確認できますか？</div>
+        <div class="faq-a">中間提案（ワイヤーフレーム or ラフ）を必ず1回お見せします。その段階で方向性を確認していただきます。</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">気に入らなかったらキャンセルできますか？</div>
+        <div class="faq-a">ココナラ規約上、納品前のキャンセルは可能です。中間提案後にキャンセルされた場合、内容によっては作業費を一部いただく場合があります（事前にご相談）。</div>
+      </div>
+    </div>
+
+    <!-- AI関連 -->
+    <div class="category">
+      <h2 class="category-title">AI機能・実装について</h2>
+
+      <div class="faq-item">
+        <div class="faq-q">AIを使うので品質が低くないですか？</div>
+        <div class="faq-a">AIはアイデア出し・量産パートでのみ活用し、最終的な構図・色彩・タイポグラフィは必ず人間が監修します。藝大基準のクオリティを担保します。</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">AI機能付きLPの API代は誰が払いますか？</div>
+        <div class="faq-a">OpenAI / Anthropic / Gemini の API キーはお客様にご用意いただきます。1ユーザー1回あたり 0.1〜2円程度。月1000人想定なら月数百〜2000円程度です。最安構成の提案も可能。</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">プログラミング経験がなくても運用できますか？</div>
+        <div class="faq-a">はい、納品時に運用マニュアル PDF + Loom 引き継ぎ動画をお渡しするので、プログラミング知識なしでも操作できます。</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">AIエージェント業務自動化って何ができますか？</div>
+        <div class="faq-a">毎日のスプレッドシート集計、メール振り分け、Slack 通知、Notion 自動更新、Telegram Bot、AI議事録作成など。<br>具体例: 私自身が「毎朝7時にニュース要約 + 予定 + カツメッセージを Telegram に届ける個人秘書 Bot」を運用中。</div>
+      </div>
+    </div>
+
+    <!-- 料金・お支払い -->
+    <div class="category">
+      <h2 class="category-title">料金・お支払い</h2>
+
+      <div class="faq-item">
+        <div class="faq-q">支払い方法は？</div>
+        <div class="faq-a">ココナラ / Lancers のプラットフォーム決済（クレジットカード・銀行振込・コンビニ等）でお支払いいただけます。直案件の場合は別途ご相談。</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">領収書は発行できますか？</div>
+        <div class="faq-a">ココナラの領収書発行機能をご利用ください。インボイス対応はまだ未登録ですが、近日中に対応予定です。</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">追加で別ページの依頼もできますか？</div>
+        <div class="faq-a">もちろん可能です。リピーター様は5%OFF。HP制作（複数ページ）は別途お見積もり。</div>
+      </div>
+    </div>
+
+    <!-- 著作権・ライセンス -->
+    <div class="category">
+      <h2 class="category-title">著作権・ライセンス</h2>
+
+      <div class="faq-item">
+        <div class="faq-q">商用利用できますか？</div>
+        <div class="faq-a">はい、すべてのサービスで商用利用OKです。納品時に著作権譲渡となります。</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">納品物を SNS で公開してもいいですか？</div>
+        <div class="faq-a">はい、ご自由にどうぞ。「制作: hanezu design lab」とクレジット表記いただけると嬉しいですが、必須ではありません。</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">作品を他のクライアントに転売したら？</div>
+        <div class="faq-a">納品後の二次販売・再配布は禁止しています。ただし、お客様自身が「お客様の事業」で何度も使用するのは制限ありません。</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">事業主としてあなたの作品を私のポートフォリオに載せていいですか？</div>
+        <div class="faq-a">「私（クライアント側）の事業のために制作してもらった」として記載いただくのは大歓迎です。</div>
+      </div>
+    </div>
+
+    <!-- その他 -->
+    <div class="category">
+      <h2 class="category-title">その他</h2>
+
+      <div class="faq-item">
+        <div class="faq-q">対面打ち合わせはできますか？</div>
+        <div class="faq-a">基本的にオンライン（テキスト or Zoom）でのコミュニケーションをお願いしておりますが、東京都内の場合のみ対面打ち合わせも可能です（要相談）。</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">急ぎの案件もお願いできますか？</div>
+        <div class="faq-a">即日〜1日対応も可能です（オプション料金 +1,500〜3,000円）。事前にご相談ください。</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">継続契約はできますか？</div>
+        <div class="faq-a">月額契約も承っております（運用代行 5,000円/月〜、デザイン継続 30,000円/月〜）。詳細はご相談ください。</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">参考にしてほしいデザインがあるのですが</div>
+        <div class="faq-a">ぜひお見せください。ヒアリングで「参考デザイン2〜3点」を必ず確認しております。完全コピーではなく、エッセンスを生かした制作になります。</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="contact">
+  <div class="container">
+    <h2>その他のご質問はお気軽に</h2>
+    <p>ご相談・お見積もりは無料です。<br>
+    ココナラ・Lancers 経由でお問い合わせください。</p>
+    <a href="index.html#contact" class="btn">ご相談する →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">© 2026 hanezu design lab — Tokyo</div>
+</footer>
+
+</body>
+</html>
