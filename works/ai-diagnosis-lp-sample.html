@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>あなたのデザイン感度診断 — AI機能付きLPサンプル</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --hanezu: #C2403A;
+    --hanezu-soft: #E8C4B8;
+    --hanezu-bg: #FAF6F2;
+    --ink: #1A1A1A;
+    --ink-soft: #4A4A4A;
+    --line: #E8E0D6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', 'Noto Serif JP', sans-serif;
+    background: var(--hanezu-bg);
+    color: var(--ink);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 720px; margin: 0 auto; padding: 0 32px; }
+
+  header {
+    padding: 24px 0;
+    text-align: center;
+  }
+  .badge {
+    display: inline-block;
+    padding: 6px 14px;
+    background: var(--hanezu);
+    color: #fff;
+    border-radius: 100px;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .header-note {
+    color: var(--ink-soft);
+    font-size: 13px;
+  }
+
+  /* Hero */
+  .hero {
+    padding: 80px 0 60px;
+    text-align: center;
+  }
+  .hero h1 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(36px, 5.5vw, 56px);
+    line-height: 1.2;
+    margin-bottom: 24px;
+    font-weight: 700;
+  }
+  .hero h1 .accent { color: var(--hanezu); }
+  .hero p {
+    font-size: 18px;
+    color: var(--ink-soft);
+    max-width: 540px;
+    margin: 0 auto 48px;
+  }
+  .start-btn {
+    display: inline-block;
+    padding: 18px 40px;
+    background: var(--hanezu);
+    color: #fff;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 8px 24px -8px rgba(194, 64, 58, 0.5);
+  }
+  .start-btn:hover { transform: translateY(-2px); }
+
+  /* Quiz */
+  .quiz {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 48px 40px;
+    margin: 40px 0;
+    box-shadow: 0 12px 32px -16px rgba(0,0,0,0.08);
+    display: none;
+  }
+  .quiz.active { display: block; }
+  .progress {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 32px;
+  }
+  .progress-bar {
+    flex: 1;
+    height: 4px;
+    background: var(--line);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-bar.done { background: var(--hanezu); }
+  .progress-bar.current { background: var(--hanezu-soft); }
+  .question {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 32px;
+    line-height: 1.5;
+  }
+  .options {
+    display: grid;
+    gap: 12px;
+  }
+  .option {
+    padding: 18px 20px;
+    border: 1.5px solid var(--line);
+    border-radius: 8px;
+    background: var(--hanezu-bg);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+    font-size: 15px;
+    font-family: inherit;
+    color: inherit;
+    width: 100%;
+    line-height: 1.6;
+  }
+  .option:hover {
+    border-color: var(--hanezu);
+    background: #fff;
+    transform: translateX(4px);
+  }
+  .question-num {
+    font-size: 13px;
+    color: var(--hanezu);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+  }
+
+  /* Result */
+  .result {
+    display: none;
+    text-align: center;
+    padding: 60px 32px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    margin: 40px 0;
+  }
+  .result.active { display: block; }
+  .result-loading {
+    padding: 40px 0;
+    color: var(--ink-soft);
+  }
+  .result-loading::after {
+    content: '...';
+    animation: dots 1.4s infinite;
+  }
+  @keyframes dots {
+    0%, 20% { content: '.'; }
+    40% { content: '..'; }
+    60%, 100% { content: '...'; }
+  }
+  .result-type {
+    display: inline-block;
+    padding: 8px 16px;
+    background: var(--hanezu-bg);
+    color: var(--hanezu);
+    border-radius: 100px;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+  }
+  .result h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(32px, 5vw, 48px);
+    margin-bottom: 16px;
+    font-weight: 700;
+  }
+  .result h2 .accent { color: var(--hanezu); }
+  .result-tagline {
+    font-size: 17px;
+    color: var(--ink-soft);
+    margin-bottom: 40px;
+  }
+  .result-body {
+    text-align: left;
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 32px;
+    background: var(--hanezu-bg);
+    border-radius: 8px;
+    margin-bottom: 32px;
+  }
+  .result-body h3 {
+    font-size: 14px;
+    color: var(--hanezu);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+  .result-body p {
+    color: var(--ink-soft);
+    margin-bottom: 16px;
+  }
+  .restart {
+    background: transparent;
+    border: 1.5px solid var(--ink);
+    color: var(--ink);
+    padding: 14px 32px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 16px;
+    font-family: inherit;
+  }
+  .restart:hover { background: var(--ink); color: #fff; }
+
+  /* Demo info */
+  .demo-info {
+    margin: 80px 0 40px;
+    padding: 32px;
+    background: #fff;
+    border: 1px dashed var(--hanezu);
+    border-radius: 8px;
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+  .demo-info h3 {
+    color: var(--hanezu);
+    margin-bottom: 12px;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .demo-info code {
+    background: var(--hanezu-bg);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+  }
+
+  footer {
+    padding: 40px 0;
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: 12px;
+    border-top: 1px solid var(--line);
+    margin-top: 80px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="badge">SAMPLE LP</div>
+    <div class="header-note">AI機能付きLP の実装サンプル — by hanezu design lab</div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container" id="heroSection">
+    <h1>あなたの<span class="accent">デザイン感度</span><br>診断テスト</h1>
+    <p>5つの質問に答えるだけで、あなたのデザイン感度を6つのタイプに分類。所要時間 約1分。</p>
+    <button class="start-btn" onclick="startQuiz()">診断を始める →</button>
+  </div>
+</section>
+
+<section class="container">
+
+  <!-- Quiz Block -->
+  <div class="quiz" id="quizBlock">
+    <div class="progress" id="progress"></div>
+    <div class="question-num" id="questionNum">QUESTION 1 / 5</div>
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+  </div>
+
+  <!-- Result Block -->
+  <div class="result" id="resultBlock">
+    <div class="result-loading" id="resultLoading">あなたの結果を分析中</div>
+    <div id="resultContent" style="display:none;">
+      <div class="result-type" id="resultType"></div>
+      <h2 id="resultTitle"></h2>
+      <p class="result-tagline" id="resultTagline"></p>
+      <div class="result-body">
+        <h3>あなたの強み</h3>
+        <p id="resultStrength"></p>
+        <h3>おすすめのデザインスタイル</h3>
+        <p id="resultStyle"></p>
+        <h3>相性のいいクリエイター</h3>
+        <p id="resultCreator"></p>
+      </div>
+      <button class="restart" onclick="restart()">もう一度受ける</button>
+    </div>
+  </div>
+
+  <div class="demo-info">
+    <h3>このページについて</h3>
+    <p>これは <strong>AI機能付きLPサンプル</strong> です。実装は <code>HTML / CSS / JavaScript</code> のみ。本番環境では <code>Claude API / Gemini API / OpenAI API</code> と接続して、より高度なパーソナライズ結果やチャットボット機能を組み込みます。</p>
+    <p>ご依頼: ココナラ「藝大生がAI機能付きLPを組み込み制作します」サービス</p>
+  </div>
+
+</section>
+
+<footer>
+  <div class="container">© 2026 hanezu design lab — AI機能付きLPサンプル</div>
+</footer>
+
+<script>
+const questions = [
+  {
+    q: "Q1. デザインで一番大事なのは？",
+    options: [
+      { text: "ストーリー（誰のためのものか）", type: "narrative" },
+      { text: "機能性（使いやすさ）", type: "functional" },
+      { text: "視覚的インパクト（見た目の美しさ）", type: "visual" },
+      { text: "コンセプト（深い意味）", type: "conceptual" },
+    ]
+  },
+  {
+    q: "Q2. 好きな色の組み合わせは？",
+    options: [
+      { text: "和色（朱・藍・抹茶）", type: "narrative" },
+      { text: "ニュートラル（黒・白・グレー）", type: "functional" },
+      { text: "鮮やか（ネオン・原色）", type: "visual" },
+      { text: "アースカラー（土色・砂色・苔色）", type: "conceptual" },
+    ]
+  },
+  {
+    q: "Q3. 制作するときに重視する工程は？",
+    options: [
+      { text: "リサーチ（背景を理解する）", type: "narrative" },
+      { text: "プロトタイピング（実際に作って試す）", type: "functional" },
+      { text: "ビジュアル開発（スケッチ・モックアップ）", type: "visual" },
+      { text: "コンセプト練り（言語化する）", type: "conceptual" },
+    ]
+  },
+  {
+    q: "Q4. 影響を受けたデザイナー / 作家は？",
+    options: [
+      { text: "原研哉 / 杉浦康平（書籍デザイン系）", type: "narrative" },
+      { text: "深澤直人 / IDEO（プロダクト系）", type: "functional" },
+      { text: "Stefan Sagmeister / Paula Scher（グラフィック系）", type: "visual" },
+      { text: "Bruce Mau / John Maeda（理論系）", type: "conceptual" },
+    ]
+  },
+  {
+    q: "Q5. 自分のデザイン作品を一言で表すと？",
+    options: [
+      { text: "物語のあるデザイン", type: "narrative" },
+      { text: "機能美のデザイン", type: "functional" },
+      { text: "印象に残るデザイン", type: "visual" },
+      { text: "問いを含むデザイン", type: "conceptual" },
+    ]
+  }
+];
+
+const results = {
+  narrative: {
+    type: "Narrative Designer",
+    title: "物語派",
+    tagline: "デザインで「意味」を伝えるのが得意",
+    accent: "ナラティブ",
+    strength: "ユーザーの感情に訴えかけるストーリー作りが得意。ブランドが持つ歴史・哲学を視覚化することで、深い共感を生み出すデザインを作ります。",
+    style: "和の美意識・ブランドストーリーテリング・編集デザイン。藝大デザイン科の構成感覚と、文学的アプローチが活きるスタイル。",
+    creator: "原研哉、杉浦康平、佐藤可士和（前期）、Stefan Bucher。書籍・ブランディング領域で藝大ブランドが直撃します。"
+  },
+  functional: {
+    type: "Functional Designer",
+    title: "機能派",
+    tagline: "使いやすさと美しさを両立する設計",
+    accent: "ファンクショナル",
+    strength: "「無駄を削ぐ」ことの美しさを理解しているデザイナー。ユーザーが直感的に使えるインターフェース・プロダクトを作る能力が高い。",
+    style: "ミニマリズム・UI/UX・プロダクトデザイン。AI実装力と相性が良く、ツール開発・SaaS UIで強みを発揮。",
+    creator: "深澤直人、Jonathan Ive、IDEO、Norman Foster。実用品の世界で評価されるタイプ。"
+  },
+  visual: {
+    type: "Visual Designer",
+    title: "ビジュアル派",
+    tagline: "強烈なインパクトで印象を残す",
+    accent: "ビジュアル",
+    strength: "色彩・形・構成でメッセージを伝える能力が群を抜く。広告・ポスター・SNSキャンペーンで存在感を発揮。",
+    style: "ポスターデザイン・キービジュアル・グラフィックアート。Geminiで生成した画像を、自分の感性で再構築するスキル。",
+    creator: "Stefan Sagmeister、Paula Scher、田名網敬一、勝井三雄。視覚芸術寄りのグラフィックデザイナー。"
+  },
+  conceptual: {
+    type: "Conceptual Designer",
+    title: "コンセプト派",
+    tagline: "問いを設計する思考型デザイナー",
+    accent: "コンセプチュアル",
+    strength: "「なぜそのデザインか」を深く考え、表現に思想を埋め込む能力。コンペや展覧会で評価されやすいタイプ。",
+    style: "コンセプチュアルアート・スペキュラティブデザイン・実験的プロダクト。藝大の「重ね（kasane）」のような哲学的作品制作に最適。",
+    creator: "Bruce Mau、John Maeda、Anthony Dunne & Fiona Raby、佐藤雅彦。教育・批評領域でも活躍するタイプ。"
+  }
+};
+
+let currentQuestion = 0;
+let answers = [];
+
+function startQuiz() {
+  document.getElementById('heroSection').style.display = 'none';
+  document.getElementById('quizBlock').classList.add('active');
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[currentQuestion];
+  document.getElementById('questionNum').textContent = `QUESTION ${currentQuestion + 1} / ${questions.length}`;
+  document.getElementById('question').textContent = q.q;
+
+  // Progress
+  const progressEl = document.getElementById('progress');
+  progressEl.innerHTML = '';
+  for (let i = 0; i < questions.length; i++) {
+    const bar = document.createElement('div');
+    bar.className = 'progress-bar';
+    if (i < currentQuestion) bar.classList.add('done');
+    else if (i === currentQuestion) bar.classList.add('current');
+    progressEl.appendChild(bar);
+  }
+
+  // Options
+  const optsEl = document.getElementById('options');
+  optsEl.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option';
+    btn.textContent = opt.text;
+    btn.onclick = () => answer(opt.type);
+    optsEl.appendChild(btn);
+  });
+}
+
+function answer(type) {
+  answers.push(type);
+  currentQuestion++;
+
+  if (currentQuestion < questions.length) {
+    showQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function showResult() {
+  document.getElementById('quizBlock').classList.remove('active');
+  document.getElementById('resultBlock').classList.add('active');
+
+  // 集計
+  const counts = {};
+  answers.forEach(a => counts[a] = (counts[a] || 0) + 1);
+  const winner = Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0];
+  const r = results[winner];
+
+  // Loading 演出（AIっぽさ）
+  setTimeout(() => {
+    document.getElementById('resultLoading').style.display = 'none';
+    document.getElementById('resultContent').style.display = 'block';
+
+    document.getElementById('resultType').textContent = r.accent;
+    document.getElementById('resultTitle').innerHTML = `あなたは <span class="accent">${r.title}</span>`;
+    document.getElementById('resultTagline').textContent = r.tagline;
+    document.getElementById('resultStrength').textContent = r.strength;
+    document.getElementById('resultStyle').textContent = r.style;
+    document.getElementById('resultCreator').textContent = r.creator;
+  }, 1800);
+}
+
+function restart() {
+  currentQuestion = 0;
+  answers = [];
+  document.getElementById('resultBlock').classList.remove('active');
+  document.getElementById('heroSection').style.display = 'block';
+  document.getElementById('resultLoading').style.display = 'block';
+  document.getElementById('resultContent').style.display = 'none';
+}
+</script>
+
+</body>
+</html>
