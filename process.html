@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>制作プロセス — hanezu design lab</title>
+<meta name="description" content="hanezu design lab の制作プロセス。ヒアリング→提案→制作→納品→運用代行までの完全フロー。藝大式の品質管理と、AI活用による効率化を両立。">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --hanezu: #C2403A;
+    --hanezu-bg: #FAF6F2;
+    --ink: #1A1A1A;
+    --ink-soft: #4A4A4A;
+    --ink-faint: #8A8A8A;
+    --line: #E8E0D6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', 'Noto Serif JP', sans-serif;
+    background: var(--hanezu-bg);
+    color: var(--ink);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+
+  header {
+    padding: 32px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .logo .accent { color: var(--hanezu); }
+  nav ul {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+  nav a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--hanezu); }
+
+  .hero {
+    padding: 120px 0 80px;
+    text-align: center;
+  }
+  .hero .label {
+    font-size: 12px;
+    color: var(--hanezu);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 24px;
+  }
+  .hero p {
+    font-size: 16px;
+    color: var(--ink-soft);
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .timeline {
+    padding: 80px 0;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .step {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 80px;
+    position: relative;
+  }
+  .step:last-child { margin-bottom: 0; }
+  .step-number {
+    flex-shrink: 0;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--hanezu);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 600;
+    z-index: 2;
+  }
+  .step:not(:last-child) .step-number::after {
+    content: '';
+    position: absolute;
+    left: 31px;
+    top: 64px;
+    width: 2px;
+    height: calc(100% + 16px);
+    background: var(--line);
+    z-index: 1;
+  }
+  .step-content {
+    flex: 1;
+    padding-top: 8px;
+  }
+  .step h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .step .duration {
+    font-size: 13px;
+    color: var(--hanezu);
+    margin-bottom: 16px;
+    letter-spacing: 0.05em;
+  }
+  .step p {
+    color: var(--ink-soft);
+    margin-bottom: 16px;
+  }
+  .step ul {
+    list-style: none;
+    padding: 0;
+  }
+  .step ul li {
+    color: var(--ink-soft);
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--line);
+    font-size: 14px;
+  }
+  .step ul li::before {
+    content: '✓ ';
+    color: var(--hanezu);
+    margin-right: 8px;
+  }
+  .step ul li:last-child { border-bottom: none; }
+
+  .principles {
+    background: white;
+    padding: 100px 0;
+    margin-top: 80px;
+  }
+  .principles h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .principles .subtitle {
+    text-align: center;
+    color: var(--ink-soft);
+    margin-bottom: 64px;
+  }
+  .principle-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+  .principle {
+    text-align: center;
+  }
+  .principle-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 20px;
+    background: var(--hanezu-bg);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+  }
+  .principle h3 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+  .principle p {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+  }
+
+  .cta {
+    padding: 120px 0;
+    text-align: center;
+  }
+  .cta h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 36px;
+    margin-bottom: 24px;
+  }
+  .cta p {
+    color: var(--ink-soft);
+    margin-bottom: 40px;
+  }
+  .btn {
+    display: inline-block;
+    padding: 16px 40px;
+    background: var(--hanezu);
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+  .btn:hover { background: #A33530; }
+
+  footer {
+    padding: 40px 0;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    color: var(--ink-faint);
+    font-size: 14px;
+  }
+
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 32px; }
+    .step { flex-direction: column; gap: 20px; }
+    .step:not(:last-child) .step-number::after { display: none; }
+    .principle-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <a href="index.html" style="text-decoration:none;color:inherit;"><div class="logo">hanezu<span class="accent">.</span></div></a>
+    <nav>
+      <ul>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="works/">Works</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="blog/">Blog</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="label">— OUR PROCESS</div>
+    <h1>制作プロセス</h1>
+    <p>ヒアリングから納品、運用代行まで。藝大式の品質管理とAI活用による効率化を両立した、6ステップの制作フロー。</p>
+  </div>
+</section>
+
+<section class="timeline">
+  <div class="container">
+
+    <div class="step">
+      <div class="step-number">1</div>
+      <div class="step-content">
+        <h2>ヒアリング</h2>
+        <div class="duration">所要時間: 30分〜1時間</div>
+        <p>ご依頼の目的・ターゲット・トーン・参考事例を伺います。<br>言語化されていないニーズを整理し、最適な提案の土台を作ります。</p>
+        <ul>
+          <li>目的とゴールの明確化</li>
+          <li>ターゲット顧客の整理</li>
+          <li>ブランドトーンの確認</li>
+          <li>参考事例 2〜3点のすり合わせ</li>
+          <li>納期・予算の確認</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">2</div>
+      <div class="step-content">
+        <h2>提案・見積もり</h2>
+        <div class="duration">所要時間: 1〜2日</div>
+        <p>ヒアリング結果を元に、最適な制作プランをご提案します。<br>金額・納期・含まれる作業範囲を明確にし、安心できる契約を結びます。</p>
+        <ul>
+          <li>制作プランの提案</li>
+          <li>見積書の発行</li>
+          <li>制作スケジュールの確定</li>
+          <li>修正回数の合意</li>
+          <li>知的財産権の取り決め</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">3</div>
+      <div class="step-content">
+        <h2>制作・初稿</h2>
+        <div class="duration">所要時間: 3〜10日（案件規模により変動）</div>
+        <p>藝大デザイン科で培った構成力・タイポグラフィ・色彩理論に、AI ツールによる効率化を組み合わせて制作。<br>制作中は3日に1回の進捗報告で、安心していただきます。</p>
+        <ul>
+          <li>3日ごとの進捗報告</li>
+          <li>初稿の提出</li>
+          <li>制作意図の解説</li>
+          <li>変更可能な範囲の明示</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">4</div>
+      <div class="step-content">
+        <h2>修正対応</h2>
+        <div class="duration">所要時間: 2〜5日</div>
+        <p>初稿に対するご意見・ご要望を反映します。<br>修正回数は契約に含まれる範囲内（通常2回まで）で対応。<br>大幅な変更は追加お見積もりの上でも柔軟に対応可能です。</p>
+        <ul>
+          <li>修正項目の整理（議事録化）</li>
+          <li>2回までの無料修正</li>
+          <li>追加要件の見積もり対応</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">5</div>
+      <div class="step-content">
+        <h2>納品</h2>
+        <div class="duration">所要時間: 1日</div>
+        <p>最終データを納品形式に整えて納品。<br>必要に応じて、お客様の環境への設置・公開サポートも行います。</p>
+        <ul>
+          <li>各形式での書き出し（AI / SVG / PNG / JPG / PDF など）</li>
+          <li>動作デモ動画の作成</li>
+          <li>公開サポート（Vercel / GitHub Pages 無料対応）</li>
+          <li>ご利用方法のご説明</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">6</div>
+      <div class="step-content">
+        <h2>30日間サポート / 運用代行</h2>
+        <div class="duration">納品から30日間 / 月額継続も可</div>
+        <p>納品から30日間は、軽微な修正や疑問への対応を無料で行います。<br>その後の運用代行（月5,000円〜）もご相談可能です。</p>
+        <ul>
+          <li>30日間の無料サポート</li>
+          <li>軽微な修正・調整対応</li>
+          <li>月額運用代行（5,000円/月〜）</li>
+          <li>新機能追加の見積もり対応</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="principles">
+  <div class="container">
+    <h2>3つの原則</h2>
+    <p class="subtitle">納品物だけでなく、お客様との関係性に込めるもの</p>
+
+    <div class="principle-grid">
+      <div class="principle">
+        <div class="principle-icon">🎓</div>
+        <h3>藝大式の品質</h3>
+        <p>東京藝術大学デザイン科で学んだタイポグラフィ・色彩理論・構図を全制作物に反映。表面的でない、長く愛される品質をお届けします。</p>
+      </div>
+      <div class="principle">
+        <div class="principle-icon">🤖</div>
+        <h3>AI 活用による効率化</h3>
+        <p>Claude / Gemini / 各種AI ツールを業務に組み込むことで、従来の半額〜2/3程度の価格で同等以上の品質を実現します。</p>
+      </div>
+      <div class="principle">
+        <div class="principle-icon">🤝</div>
+        <h3>透明性のある対応</h3>
+        <p>進捗報告は3日に1回。修正範囲・追加料金の判断基準も明文化。「言った言わない」のトラブルがない安心感を大切にしています。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container">
+    <h2>まずはお気軽にご相談を</h2>
+    <p>「具体的な金額・納期を知りたい」「自分の業務に AI 活用を組み込みたい」<br>そうした想いを、ぜひお聞かせください。</p>
+    <a href="pricing.html" class="btn">料金表を見る</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">© 2026 hanezu design lab — Tokyo</div>
+</footer>
+
+</body>
+</html>
