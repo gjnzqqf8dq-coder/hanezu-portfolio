@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notion API + Telegram Bot 入門 - 30分で始める業務自動化 — hanezu blog</title>
+<meta name="description" content="Notion APIとTelegram Botを連携させて、毎朝7時にタスクを通知するBotを30分で構築する手順。コード公開あり。AIエージェント実装の入門に最適。">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="article-style.css">
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <a href="../index.html" style="text-decoration:none;color:inherit;"><div class="logo">hanezu<span class="accent">.</span></div></a>
+    <nav>
+      <ul>
+        <li><a href="../index.html#services">Services</a></li>
+        <li><a href="../works/">Works</a></li>
+        <li><a href="../pricing.html">Pricing</a></li>
+        <li><a href="../faq.html">FAQ</a></li>
+        <li><a href="index.html" class="active">Blog</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="article-header">
+  <div class="container">
+    <div class="label">技術 / 自動化</div>
+    <h1>Notion API + Telegram Bot 入門 - 30分で始める業務自動化</h1>
+    <div class="article-meta">
+      <span>2026.05.08</span>
+      <span>·</span>
+      <span>by hanezu</span>
+      <span>·</span>
+      <span>読了時間 約12分</span>
+    </div>
+  </div>
+</section>
+
+<article class="article-body">
+  <div class="container">
+
+    <p>東京藝術大学デザイン科の hanezu です。</p>
+    <p>「業務自動化を始めたいけど、どこから手をつければ？」</p>
+    <p>こういう質問が一番多い。だから今回は<strong>「30分で動くBot」</strong>を実際に作る手順を、コード付きで完全公開します。</p>
+
+    <h2>作るもの</h2>
+
+    <p>毎朝7時に Notion のタスクDB から今日のタスクを取得 → Telegram に通知する Bot。</p>
+    <p>これは私が<strong>3年前から運用している実物</strong>です。</p>
+
+    <h2>必要なもの（全部無料）</h2>
+
+    <ul>
+      <li>✅ Notion アカウント</li>
+      <li>✅ Telegram アカウント</li>
+      <li>✅ Node.js v18+</li>
+      <li>✅ テキストエディタ（VS Code 推奨）</li>
+      <li>✅ Render.com アカウント（デプロイ用・無料枠）</li>
+    </ul>
+
+    <p>クレジットカード不要。30分で完成。</p>
+
+    <h2>Step 1: Notion のセットアップ（5分）</h2>
+
+    <h3>1-1. タスクDBを用意</h3>
+
+    <p>Notion で新しいデータベース（テーブル）を作成。プロパティは以下の3つ:</p>
+    <ul>
+      <li><strong>タスク名</strong>（タイトル）</li>
+      <li><strong>期限</strong>（日付）</li>
+      <li><strong>ステータス</strong>（ステータス: Todo / Doing / Done）</li>
+    </ul>
+
+    <h3>1-2. Integration を作成</h3>
+
+    <ol>
+      <li><a href="https://www.notion.so/my-integrations" target="_blank">notion.so/my-integrations</a> にアクセス</li>
+      <li>「+ 新しいインテグレーション」をクリック</li>
+      <li>名前（例: "Daily Bot"）を入力 → 作成</li>
+      <li>「シークレット」をコピー（後で使う）</li>
+    </ol>
+
+    <h3>1-3. DBに Integration を接続</h3>
+
+    <p>タスクDBのページで右上「···」→「接続を追加」→ 作成した Integration を選択。</p>
+
+    <h3>1-4. データベースID取得</h3>
+
+    <p>DBのURLを開く:</p>
+    <pre><code>https://notion.so/workspace/<strong>00000000000000000000000000000000</strong>?v=...</code></pre>
+    <p>太字部分（32桁）が Database ID。コピーする。</p>
+
+    <h2>Step 2: Telegram のセットアップ（5分）</h2>
+
+    <h3>2-1. Bot を作成</h3>
+
+    <ol>
+      <li>Telegram で <strong>@BotFather</strong> を検索</li>
+      <li>チャットを開く → <code>/newbot</code> 送信</li>
+      <li>Bot の名前（例: My Daily Bot）を入力</li>
+      <li>Bot の username（例: hanezu_daily_bot）を入力（_botで終わる）</li>
+      <li>Bot Token が発行される → コピー</li>
+    </ol>
+
+    <h3>2-2. 自分の Chat ID 取得</h3>
+
+    <ol>
+      <li>作った Bot に自分から1度メッセージを送る（"hello" 等）</li>
+      <li>ブラウザで以下を開く:
+        <pre><code>https://api.telegram.org/bot<strong>YOUR_BOT_TOKEN</strong>/getUpdates</code></pre>
+      </li>
+      <li>JSON の中の <code>"chat":{"id":XXXXX}</code> の数字をコピー</li>
+    </ol>
+
+    <h2>Step 3: コードを書く（10分）</h2>
+
+    <h3>3-1. プロジェクト作成</h3>
+
+    <pre><code>mkdir my-daily-bot
+cd my-daily-bot
+npm init -y
+npm install @notionhq/client node-fetch@2 dotenv</code></pre>
+
+    <h3>3-2. .env ファイル作成</h3>
+
+    <pre><code>NOTION_TOKEN=secret_xxxxxxxxxxxxxxxx
+NOTION_DATABASE_ID=00000000000000000000000000000000
+TELEGRAM_BOT_TOKEN=0000000000:AAAAAAAAAAAAAAAAAAAAAAAAA
+TELEGRAM_CHAT_ID=000000000</code></pre>
+
+    <h3>3-3. index.js 作成</h3>
+
+    <pre><code>require('dotenv').config();
+const { Client } = require('@notionhq/client');
+const fetch = require('node-fetch');
+
+const notion = new Client({ auth: process.env.NOTION_TOKEN });
+
+async function fetchTasks() {
+  const today = new Date().toISOString().split('T')[0];
+  const res = await notion.databases.query({
+    database_id: process.env.NOTION_DATABASE_ID,
+    filter: {
+      and: [
+        { property: '期限', date: { on_or_before: today } },
+        { property: 'ステータス', status: { does_not_equal: 'Done' } }
+      ]
+    }
+  });
+  return res.results.map(p => ({
+    title: p.properties['タスク名'].title[0]?.plain_text || '無題',
+    url: p.url
+  }));
+}
+
+async function sendTelegram(text) {
+  const url = `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`;
+  await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      chat_id: process.env.TELEGRAM_CHAT_ID,
+      text,
+      parse_mode: 'Markdown'
+    })
+  });
+}
+
+async function main() {
+  const tasks = await fetchTasks();
+  if (tasks.length === 0) {
+    await sendTelegram('☀️ 今日のタスクはありません！');
+    return;
+  }
+  const lines = tasks.map((t, i) =&gt; `${i + 1}. [${t.title}](${t.url})`);
+  await sendTelegram(`☀️ *今日のタスク*\n\n${lines.join('\n')}`);
+}
+
+main();</code></pre>
+
+    <h3>3-4. ローカルで動作確認</h3>
+
+    <pre><code>node index.js</code></pre>
+
+    <p>Telegram に通知が届いたら成功！</p>
+
+    <h2>Step 4: 自動実行（10分）</h2>
+
+    <p>Render.com の Cron Job 機能を使えば、無料で毎朝7時に自動実行できる。</p>
+
+    <h3>4-1. GitHub にプッシュ</h3>
+
+    <p><code>.gitignore</code> に <code>.env</code> と <code>node_modules</code> を必ず追加してから:</p>
+
+    <pre><code>git init
+echo ".env\nnode_modules" &gt; .gitignore
+git add .
+git commit -m "Initial commit"
+git remote add origin https://github.com/USERNAME/my-daily-bot.git
+git push -u origin main</code></pre>
+
+    <h3>4-2. Render で Cron Job 作成</h3>
+
+    <ol>
+      <li><a href="https://render.com" target="_blank">Render.com</a> でアカウント作成</li>
+      <li>「New」→「Cron Job」</li>
+      <li>GitHub リポジトリを連携</li>
+      <li>設定:
+        <ul>
+          <li><strong>Name</strong>: my-daily-bot</li>
+          <li><strong>Build Command</strong>: <code>npm install</code></li>
+          <li><strong>Command</strong>: <code>node index.js</code></li>
+          <li><strong>Schedule</strong>: <code>0 22 * * *</code> （UTC 22時 = JST 7時）</li>
+        </ul>
+      </li>
+      <li>環境変数（.env の中身）を Environment Variables に転記</li>
+      <li>「Create Cron Job」</li>
+    </ol>
+
+    <p>これで完成。明日の朝7時から、毎日タスクが Telegram に届く。</p>
+
+    <h2>応用：色々な Bot に展開可能</h2>
+
+    <p>このパターンが理解できれば、以下も全部同じ構造で作れる:</p>
+
+    <ul>
+      <li>📧 Gmail の重要メールを LINE に転送</li>
+      <li>📊 スプレッドシート集計を Slack に日次レポート</li>
+      <li>📰 RSS のニュースを Gemini で要約 → Telegram</li>
+      <li>📅 Google Calendar の今日の予定を朝7時に通知</li>
+      <li>🐦 Twitter のキーワード監視 → 即時通知</li>
+      <li>💰 為替レートを毎時通知</li>
+      <li>🎵 Spotify の新着リリース通知</li>
+    </ul>
+
+    <p>すべて<strong>「データを取る → 整形する → 通知する」</strong>の3ステップ。</p>
+
+    <h2>ハマりやすいポイント</h2>
+
+    <h3>❌ Notion API でデータが取れない</h3>
+    <p>原因: Integration を DB に「接続」していない（Step 1-3）。</p>
+    <p>確認: DB ページの「···」→「接続」に Integration があるか。</p>
+
+    <h3>❌ Telegram Bot が反応しない</h3>
+    <p>原因: 自分から Bot に1度メッセージを送ってない。</p>
+    <p>確認: <code>getUpdates</code> で自分の chat_id が返ってくるか。</p>
+
+    <h3>❌ 環境変数が読み込めない</h3>
+    <p>原因: <code>.env</code> ファイルが正しい場所にない、または <code>require('dotenv').config()</code> を呼んでない。</p>
+
+    <h3>❌ Render で動かない</h3>
+    <p>原因: ローカルの <code>.env</code> は本番に反映されない。Render の Environment 設定に転記する必要がある。</p>
+
+    <div class="cta-box">
+      <h3>「自分の業務でも自動化したい」という方へ</h3>
+      <p>「自社業務に AI / 自動化を組み込みたいけど、自分で実装する時間がない」という方は、ココナラの<strong>「AIエージェント業務自動化」</strong>サービスにてお引き受けしております。</p>
+      <p>8,000円〜（基本パターン）/ 18,000円〜（カスタム要件）。月額運用代行も対応可能（5,000円/月〜）。</p>
+      <p>5パターンの即納テンプレ保有しているので、3〜7日で納品可能です。</p>
+    </div>
+
+    <h2>学習リソース</h2>
+
+    <ul>
+      <li><a href="https://developers.notion.com/" target="_blank">Notion API 公式ドキュメント</a> - 全部ここで完結</li>
+      <li><a href="https://core.telegram.org/bots/api" target="_blank">Telegram Bot API 公式</a></li>
+      <li><a href="https://render.com/docs/cron-jobs" target="_blank">Render Cron Job ガイド</a></li>
+      <li><a href="https://docs.anthropic.com/" target="_blank">Anthropic Claude API（さらに高度な用途で）</a></li>
+    </ul>
+
+    <h2>最後に</h2>
+
+    <p>「業務自動化」と聞くと難しそうに思えるけど、<strong>一番シンプルな Bot は本当に20行で書ける</strong>。</p>
+    <p>大事なのは、最初の1つを作ってみること。完成したら、応用は無限です。</p>
+    <p>このBotから始めて、私は今 AIエージェント実装で月10万円超を稼いでます。あなたも始められます。</p>
+
+  </div>
+</article>
+
+<section class="related">
+  <div class="container" style="max-width: 1100px;">
+    <h3>関連記事</h3>
+    <div class="related-list">
+      <a href="05-ai-agent.html" class="related-card">
+        <h4>AIエージェント実装が最強の副業ポジション</h4>
+        <p>2026年ブルーオーシャン市場の入り方</p>
+      </a>
+      <a href="02-notion-tips.html" class="related-card">
+        <h4>藝大式 Notion 運用術</h4>
+        <p>3年以上の運用ノウハウを段階的に解説</p>
+      </a>
+      <a href="04-3d-pipeline.html" class="related-card">
+        <h4>3Dプリント自動化パイプライン</h4>
+        <p>Gemini → Blender → 3Dプリンタ</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container" style="max-width: 1100px;">© 2026 hanezu design lab — Tokyo</div>
+</footer>
+
+</body>
+</html>
