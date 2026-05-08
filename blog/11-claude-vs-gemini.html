@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude API vs Gemini API 完全比較ガイド（2026年版） — hanezu blog</title>
+<meta name="description" content="業務自動化で使うAI APIの選び方。Claude Haiku / Sonnet / Opus と Gemini Flash / Pro の料金・性能・用途別比較を実体験ベースで解説。">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="article-style.css">
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <a href="../index.html" style="text-decoration:none;color:inherit;"><div class="logo">hanezu<span class="accent">.</span></div></a>
+    <nav>
+      <ul>
+        <li><a href="../index.html#services">Services</a></li>
+        <li><a href="../works/">Works</a></li>
+        <li><a href="../pricing.html">Pricing</a></li>
+        <li><a href="../faq.html">FAQ</a></li>
+        <li><a href="index.html" class="active">Blog</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="article-header">
+  <div class="container">
+    <div class="label">技術 / AI比較</div>
+    <h1>Claude API vs Gemini API 完全比較ガイド（2026年版）</h1>
+    <div class="article-meta">
+      <span>2026.05.08</span>
+      <span>·</span>
+      <span>by hanezu</span>
+      <span>·</span>
+      <span>読了時間 約11分</span>
+    </div>
+  </div>
+</section>
+
+<article class="article-body">
+  <div class="container">
+
+    <p>東京藝術大学デザイン科の hanezu です。</p>
+    <p>「Claude と Gemini、どっちで業務自動化を作れば？」</p>
+    <p>クライアントから一番よく聞かれる質問です。今回は私が実際に両方使い込んできた経験を元に、<strong>用途別の選び方</strong>を解説します。</p>
+
+    <h2>結論（先に答えを）</h2>
+
+    <table>
+      <tr><th>用途</th><th>推奨</th><th>理由</th></tr>
+      <tr><td>大量処理 / 軽量タスク</td><td>Gemini Flash</td><td>無料枠が圧倒的</td></tr>
+      <tr><td>精度重視 / 文章生成</td><td>Claude Sonnet</td><td>日本語と推論が強い</td></tr>
+      <tr><td>最高品質が必要</td><td>Claude Opus</td><td>長文・複雑な指示への追従</td></tr>
+      <tr><td>画像生成・分析</td><td>Gemini</td><td>Nano Banana Pro が無料・高品質</td></tr>
+      <tr><td>コード生成</td><td>Claude</td><td>圧倒的な精度</td></tr>
+    </table>
+
+    <h2>1. 料金比較（2026年5月時点）</h2>
+
+    <h3>Claude API（Anthropic）</h3>
+
+    <table>
+      <tr><th>モデル</th><th>入力 (1M tokens)</th><th>出力 (1M tokens)</th></tr>
+      <tr><td>Haiku 4.5</td><td>$1</td><td>$5</td></tr>
+      <tr><td>Sonnet 4.6</td><td>$3</td><td>$15</td></tr>
+      <tr><td>Opus 4.7</td><td>$15</td><td>$75</td></tr>
+    </table>
+
+    <h3>Gemini API（Google）</h3>
+
+    <table>
+      <tr><th>モデル</th><th>入力 (1M tokens)</th><th>出力 (1M tokens)</th></tr>
+      <tr><td>Flash 2.5</td><td>$0.075</td><td>$0.30</td></tr>
+      <tr><td>Pro 2.5</td><td>$1.25</td><td>$5.00</td></tr>
+    </table>
+
+    <p><strong>※ Gemini には無料枠があります</strong>:</p>
+    <ul>
+      <li>Flash: 1,500 リクエスト/日 無料</li>
+      <li>Pro: 50 リクエスト/日 無料</li>
+    </ul>
+
+    <p>Claude は無料枠なし（クレジット入金制）。</p>
+
+    <h2>2. 日本語の品質</h2>
+
+    <h3>同じプロンプトで比較</h3>
+
+    <p>プロンプト: 「東京藝術大学に通う学生が副業を始める際の注意点を3つ教えてください」</p>
+
+    <p><strong>Claude Sonnet 4.6 の出力</strong>:</p>
+    <blockquote>
+    1. 学業との両立を最優先する
+       美術系大学は課題量が多く、特に作品制作の時期は副業が学業を圧迫しやすいです。
+       週あたりの稼働時間に上限を設けることをお勧めします。
+
+    2. 学割・大学のリソースを最大活用する
+       学生のうちは Adobe Creative Cloud の学割版や、大学のソフトウェアライセンスが使えます。
+       これらを活用することで、初期投資を大幅に抑えられます。
+
+    3. 作品の著作権・大学のポリシーを確認する
+       課題で作った作品の二次利用について、大学のガイドラインを必ず確認してください。
+       特に、共同制作や指導教員の関与があった作品は要注意です。
+    </blockquote>
+
+    <p><strong>Gemini Flash 2.5 の出力</strong>:</p>
+    <blockquote>
+    東京藝術大学に通う学生が副業を始める際の注意点を3つご紹介します。
+
+    1. 大学の規定を確認する
+    アルバイトや副業について、大学の学則や奨学金規定を確認しましょう。
+
+    2. 確定申告に備える
+    副業所得が一定額を超えると、確定申告が必要になります。
+    青色申告など、税制を理解しておくことが重要です。
+
+    3. 学業とのバランス
+    時間管理を徹底し、本業である学業に支障が出ないようにしましょう。
+    </blockquote>
+
+    <p><strong>評価</strong>:</p>
+    <ul>
+      <li>Claude: 具体性・深さで勝る。藝大の特性まで踏まえた回答。</li>
+      <li>Gemini: 一般的だが網羅的。速度はGeminiの方が圧倒的に速い。</li>
+    </ul>
+
+    <h2>3. コード生成の比較</h2>
+
+    <h3>同じ指示: 「Notion API でタスクを取得する関数を JavaScript で書いて」</h3>
+
+    <p>結論: <strong>Claude が圧勝</strong>。</p>
+
+    <ul>
+      <li>Claude: そのまま動くコード + エラーハンドリング + 日本語コメント</li>
+      <li>Gemini: 動くが、エラーハンドリングが薄い + 古いAPIバージョンを使うことがある</li>
+    </ul>
+
+    <p>業務自動化の実装には Claude が向いています。</p>
+
+    <h2>4. 速度の比較</h2>
+
+    <p>1リクエストあたりの応答時間:</p>
+
+    <table>
+      <tr><th>モデル</th><th>応答時間</th></tr>
+      <tr><td>Gemini Flash</td><td>0.5-1秒</td></tr>
+      <tr><td>Gemini Pro</td><td>1-3秒</td></tr>
+      <tr><td>Claude Haiku</td><td>1-2秒</td></tr>
+      <tr><td>Claude Sonnet</td><td>2-5秒</td></tr>
+      <tr><td>Claude Opus</td><td>5-10秒</td></tr>
+    </table>
+
+    <p>大量処理（メール仕分け数百通）には Flash が最適。</p>
+
+    <h2>5. 用途別の使い分け</h2>
+
+    <h3>パターンA: 個人事業主の業務自動化（Pattern 1-3）</h3>
+
+    <p><strong>推奨: Gemini Flash</strong></p>
+    <ul>
+      <li>無料枠で月数万リクエストまで動く</li>
+      <li>シンプルな分類・要約には十分</li>
+      <li>クライアントの API 費用ゼロ</li>
+    </ul>
+
+    <h3>パターンB: コンテンツ生成・記事作成</h3>
+
+    <p><strong>推奨: Claude Sonnet</strong></p>
+    <ul>
+      <li>日本語の文体が自然</li>
+      <li>長文の構造化が上手い</li>
+      <li>1記事あたり数十円で十分な品質</li>
+    </ul>
+
+    <h3>パターンC: コード自動生成・修正</h3>
+
+    <p><strong>推奨: Claude Opus or Sonnet</strong></p>
+    <ul>
+      <li>動くコードを出す精度が高い</li>
+      <li>古いコードの修正提案も得意</li>
+      <li>Cursor / Claude Code でも同じエンジンが使われている</li>
+    </ul>
+
+    <h3>パターンD: 画像生成 / 分析</h3>
+
+    <p><strong>推奨: Gemini（Nano Banana Pro）</strong></p>
+    <ul>
+      <li>画像生成は無料で100枚/日</li>
+      <li>商用利用OK</li>
+      <li>3D変換や Blender 連携にも活用可能</li>
+    </ul>
+
+    <h2>6. 私の実運用例</h2>
+
+    <h3>朝のニュース要約 Bot</h3>
+    <ul>
+      <li>使用: Gemini Flash</li>
+      <li>理由: 無料枠で動く / 速い</li>
+      <li>API使用料: ¥0/月</li>
+    </ul>
+
+    <h3>クライアントワーク（業務自動化案件）</h3>
+    <ul>
+      <li>使用: Gemini Flash + Claude Sonnet（用途で使い分け）</li>
+      <li>理由: クライアント環境のAPI料金を抑える</li>
+      <li>API使用料: 月100-500円程度</li>
+    </ul>
+
+    <h3>ブログ・記事執筆補助</h3>
+    <ul>
+      <li>使用: Claude Sonnet</li>
+      <li>理由: 日本語の品質が圧倒的</li>
+      <li>API使用料: 月1,000-2,000円程度</li>
+    </ul>
+
+    <h2>7. ハイブリッド戦略（オススメ）</h2>
+
+    <p>本気の業務自動化では、<strong>両方使う</strong>のが正解。</p>
+
+    <p>典型的なパターン:</p>
+    <ol>
+      <li>第一段階: Gemini Flash で高速に分類・スクリーニング（無料）</li>
+      <li>第二段階: 重要なものだけ Claude で詳細処理（有料・少額）</li>
+    </ol>
+
+    <p>例: 日100通のメールを処理</p>
+    <ul>
+      <li>100通 → Gemini Flash で重要度判定（¥0）</li>
+      <li>うち20通 → Claude で返信下書き生成（約 ¥10）</li>
+    </ul>
+
+    <p>これで月コスト ¥300程度に抑えられる。</p>
+
+    <h2>8. 注意点</h2>
+
+    <h3>Claude</h3>
+    <ul>
+      <li>無料枠なし → 最低 $5 入金が必要</li>
+      <li>レート制限あり（1分あたり何リクエストまで等）</li>
+      <li>API キーの取り扱い注意（漏洩で大量請求リスク）</li>
+    </ul>
+
+    <h3>Gemini</h3>
+    <ul>
+      <li>無料枠の制限が頻繁に変わる（公式で要確認）</li>
+      <li>商用利用可だが、データを学習に使われる可能性がある（ビジネス利用は要確認）</li>
+      <li>応答品質に揺らぎがある（同じプロンプトでも違う結果）</li>
+    </ul>
+
+    <div class="cta-box">
+      <h3>「自社の業務に最適なAIを選んで欲しい」という方へ</h3>
+      <p>「Claude と Gemini、どちらが自分の業務に合うか」というご相談、ココナラの<strong>「AIエージェント業務自動化」</strong>サービスにて承ります（8,000円〜）。</p>
+      <p>ヒアリング → 最適なAI選定 → 実装 → 運用代行 まで一貫対応可能。</p>
+      <p>API使用料を最小化する設計も得意です。</p>
+    </div>
+
+    <h2>9. 学習リソース</h2>
+
+    <ul>
+      <li><a href="https://docs.anthropic.com/" target="_blank">Anthropic Docs</a> - 公式</li>
+      <li><a href="https://aistudio.google.com/" target="_blank">Google AI Studio</a> - 無料で試せる</li>
+      <li><a href="https://platform.openai.com/docs" target="_blank">OpenAI Docs</a> - 比較対象として</li>
+    </ul>
+
+    <h2>10. 結論</h2>
+
+    <p>「どっちか選ぶ」ではなく、「両方使い分ける」が正解です。</p>
+
+    <p>初心者なら、まずは <strong>Gemini Flash の無料枠</strong>で慣れる。<br>クライアントワークになったら、Claude を必要に応じて使う。</p>
+
+    <p>これがコスパ最強の戦略です。</p>
+
+    <h2>最後に</h2>
+
+    <p>AI は道具です。重要なのは「どっちが優秀か」ではなく「<strong>用途に合うか</strong>」。</p>
+    <p>あなたの目的に合わせて、最適な道具を選んでください。</p>
+
+  </div>
+</article>
+
+<section class="related">
+  <div class="container" style="max-width: 1100px;">
+    <h3>関連記事</h3>
+    <div class="related-list">
+      <a href="07-notion-telegram-bot.html" class="related-card">
+        <h4>Notion API + Telegram Bot 入門</h4>
+        <p>30分で動くBotを作るチュートリアル</p>
+      </a>
+      <a href="05-ai-agent.html" class="related-card">
+        <h4>AIエージェント実装が最強の副業ポジション</h4>
+        <p>2026年ブルーオーシャン市場の入り方</p>
+      </a>
+      <a href="08-ai-replace-fear.html" class="related-card">
+        <h4>AIに仕事を奪われたくない人ほど</h4>
+        <p>「組み込む側」に回る戦略</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container" style="max-width: 1100px;">© 2026 hanezu design lab — Tokyo</div>
+</footer>
+
+</body>
+</html>
