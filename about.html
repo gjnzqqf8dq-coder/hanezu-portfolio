@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — hanezu design lab</title>
+<meta name="description" content="hanezu design lab について。東京藝術大学デザイン科の現役学生が運営する、デザイン × AIエージェント実装の個人スタジオ。">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --hanezu: #C2403A;
+    --hanezu-bg: #FAF6F2;
+    --ink: #1A1A1A;
+    --ink-soft: #4A4A4A;
+    --ink-faint: #8A8A8A;
+    --line: #E8E0D6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', 'Noto Serif JP', sans-serif;
+    background: var(--hanezu-bg);
+    color: var(--ink);
+    line-height: 1.8;
+  }
+  .container { max-width: 800px; margin: 0 auto; padding: 0 32px; }
+
+  header {
+    padding: 32px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1100px;
+  }
+  .logo {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .logo .accent { color: var(--hanezu); }
+  nav ul {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+  nav a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 14px;
+  }
+
+  .hero {
+    padding: 120px 0 80px;
+    text-align: center;
+  }
+  .hero .label {
+    font-size: 12px;
+    color: var(--hanezu);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 56px;
+    line-height: 1.3;
+    margin-bottom: 24px;
+  }
+  .hero p {
+    font-size: 18px;
+    color: var(--ink-soft);
+    max-width: 580px;
+    margin: 0 auto;
+  }
+
+  .story {
+    padding: 60px 0 120px;
+  }
+  .story h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 28px;
+    margin-top: 60px;
+    margin-bottom: 24px;
+    border-left: 4px solid var(--hanezu);
+    padding-left: 16px;
+  }
+  .story p {
+    color: var(--ink-soft);
+    margin-bottom: 16px;
+    font-size: 16px;
+  }
+  .story p strong {
+    color: var(--ink);
+  }
+
+  .quote {
+    background: white;
+    padding: 32px 40px;
+    border-radius: 12px;
+    margin: 32px 0;
+    border-left: 4px solid var(--hanezu);
+    font-family: 'Noto Serif JP', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink);
+  }
+
+  .timeline-list {
+    list-style: none;
+    padding: 0;
+  }
+  .timeline-list li {
+    padding: 16px 0;
+    border-bottom: 1px dashed var(--line);
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+  }
+  .timeline-list li:last-child { border-bottom: none; }
+  .timeline-year {
+    flex-shrink: 0;
+    width: 80px;
+    color: var(--hanezu);
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 600;
+  }
+  .timeline-content {
+    color: var(--ink-soft);
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .skill-item {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+  }
+  .skill-item h4 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: var(--hanezu);
+  }
+  .skill-item p {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  .principles {
+    background: white;
+    margin-top: 80px;
+    padding: 80px 0;
+    border-radius: 24px;
+  }
+  .principles h3 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 24px;
+    margin-bottom: 32px;
+    text-align: center;
+  }
+  .principle-list {
+    list-style: none;
+    padding: 0;
+  }
+  .principle-list li {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .principle-list li:last-child { border-bottom: none; }
+  .principle-list strong {
+    color: var(--hanezu);
+    font-family: 'Noto Serif JP', serif;
+    font-size: 18px;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .cta {
+    padding: 100px 0;
+    text-align: center;
+  }
+  .cta h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 32px;
+    margin-bottom: 24px;
+  }
+  .cta p {
+    color: var(--ink-soft);
+    margin-bottom: 40px;
+  }
+  .btn {
+    display: inline-block;
+    padding: 16px 40px;
+    background: var(--hanezu);
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 600;
+    margin: 0 8px;
+  }
+  .btn-outline {
+    background: transparent;
+    border: 2px solid var(--hanezu);
+    color: var(--hanezu);
+  }
+
+  footer {
+    padding: 40px 0;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    color: var(--ink-faint);
+    font-size: 14px;
+  }
+
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 36px; }
+    .skills-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <a href="index.html" style="text-decoration:none;color:inherit;"><div class="logo">hanezu<span class="accent">.</span></div></a>
+    <nav>
+      <ul>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="works/">Works</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="process.html">Process</a></li>
+        <li><a href="blog/">Blog</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="label">— ABOUT</div>
+    <h1>hanezu について</h1>
+    <p>東京藝術大学デザイン科の現役学生が運営する、<br>「デザイン × AIエージェント実装」の個人スタジオです。</p>
+  </div>
+</section>
+
+<section class="story">
+  <div class="container">
+
+    <h2>はじめに</h2>
+    <p>こんにちは、hanezu です。<br>東京藝術大学デザイン科に通う学生で、副業として「デザイン × AIエージェント実装」のクリエイティブスタジオを運営しています。</p>
+    <p>ここでは、私のバックグラウンド・このスタジオを始めた理由・大切にしている価値観をお伝えします。</p>
+
+    <h2>始めたきっかけ</h2>
+    <p>藝大に進学して2年目、<strong>「画材代・課題費・本代でどんどん出費がかさむ」</strong>状況に直面しました。奨学金とアルバイトでは追いつかない。</p>
+    <p>そこで、<strong>「学業と両立できて、自分のスキルを伸ばせる副業」</strong>を本気で考えました。</p>
+
+    <div class="quote">
+      「藝大生らしさを活かしたい。<br>でも、ただ『学生だから安く』ではなく、<br>『藝大生だからできること』をやりたい」
+    </div>
+
+    <p>たどり着いた答えが、<strong>「デザイン × AIエージェント実装」</strong>という独自ポジション。<br>美術系・文系の人が AI 実装を学ぶケースは少なく、技術系の人がデザインを学ぶケースも少ない。<br>この交差点に、誰も座っていない椅子があった。</p>
+
+    <h2>2週間でゼロから月10万円へ</h2>
+    <p>ココナラに登録した3日目で初依頼を取り、2週間で:</p>
+    <ul style="padding-left: 24px; color: var(--ink-soft);">
+      <li>出品7サービス</li>
+      <li>受注 12件</li>
+      <li>売上 12万円（手取り 9万円）</li>
+    </ul>
+    <p>に到達しました。</p>
+    <p>「特別な才能があったから」ではありません。<a href="blog/01-ai-design-tips.html">2週間で月10万円の副業を構築した話</a> で詳細を公開しています。</p>
+
+    <h2>2026年の活動</h2>
+    <ul class="timeline-list">
+      <li>
+        <div class="timeline-year">2026 春</div>
+        <div class="timeline-content">藝大デザイン科 在籍中。コンペ応募・3D作品制作を継続しながら、副業を開始。</div>
+      </li>
+      <li>
+        <div class="timeline-year">2026 5月</div>
+        <div class="timeline-content">hanezu design lab 立ち上げ。ココナラ・Lancers・クラウドワークスで7サービスを展開。</div>
+      </li>
+      <li>
+        <div class="timeline-year">2026 5月</div>
+        <div class="timeline-content">本サイト + ブログ（12記事）公開。SEO + SNSでの発信を開始。</div>
+      </li>
+    </ul>
+
+    <h2>得意分野</h2>
+    <div class="skills-grid">
+      <div class="skill-item">
+        <h4>AIエージェント実装</h4>
+        <p>Notion / Slack / Telegram / Gmail と Claude / Gemini API の連携。9パターンの即納テンプレート保有。</p>
+      </div>
+      <div class="skill-item">
+        <h4>AI機能付きWeb制作</h4>
+        <p>チャットボット内蔵LP、AI診断クイズLP、画像生成内蔵サイトなど、対話型AI機能を組み込んだWeb制作。</p>
+      </div>
+      <div class="skill-item">
+        <h4>ブランドデザイン</h4>
+        <p>ロゴ・LP・名刺。藝大デザイン科で学んだタイポグラフィ・色彩理論を活かした、長く愛されるデザイン。</p>
+      </div>
+      <div class="skill-item">
+        <h4>3D / Procedural Design</h4>
+        <p>Blender Python によるパラメトリックな3D生成。Gemini→Tripo3D→Blender→3Dプリンタの完全自動パイプライン。</p>
+      </div>
+      <div class="skill-item">
+        <h4>Notion 構築</h4>
+        <p>3年以上の運用ノウハウ。個人・チーム向けのワークスペース設計から API 連携自動化まで。</p>
+      </div>
+      <div class="skill-item">
+        <h4>業務自動化全般</h4>
+        <p>Webhook、Cron Job、Cloud Functions、GAS。月数百円で動く軽量運用設計が得意。</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="principles">
+  <div class="container">
+    <h3>大切にしている価値観</h3>
+
+    <ul class="principle-list">
+      <li>
+        <strong>美しさと実用性の両立</strong>
+        美しさを犠牲にした実用性も、実用性を欠いた美しさも、長続きしません。両方が共存する制作物を目指しています。
+      </li>
+      <li>
+        <strong>透明性のある関係</strong>
+        進捗・修正範囲・追加料金の判断基準。すべて事前に明文化することで、お客様との関係を健全に保ちます。
+      </li>
+      <li>
+        <strong>AIを「組み込む」側でいる</strong>
+        AIに振り回されるのではなく、AIを業務の中核として組み込む側に立つ。これが2026年以降の決定的な差別化要因だと信じています。
+      </li>
+      <li>
+        <strong>学業との健全な両立</strong>
+        副業はあくまで「学生としての本業」の延長。藝大での学びこそが、この活動の創造性の源泉です。
+      </li>
+      <li>
+        <strong>長期的な関係性</strong>
+        単発受注ではなく、お客様の事業の継続的なパートナーとして関わることを目指しています。月額運用代行は、その表れの一つです。
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container">
+    <h2>お話しませんか</h2>
+    <p>「自社の業務に AI を組み込みたい」「美しいけれど実用的なデザインが欲しい」<br>そうした想いを、ぜひお聞かせください。</p>
+    <a href="pricing.html" class="btn">料金表を見る</a>
+    <a href="works/" class="btn btn-outline">作品を見る</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">© 2026 hanezu design lab — Tokyo</div>
+</footer>
+
+</body>
+</html>
