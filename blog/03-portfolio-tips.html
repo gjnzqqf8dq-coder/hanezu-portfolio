@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>受注に直結するポートフォリオサイトの作り方 — hanezu blog</title>
+<meta name="description" content="ポートフォリオサイトの存在が受注率を3-5倍にした実体験。藝大式のデザイン・技術選定・公開方法を完全公開。">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="article-style.css">
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <a href="../index.html" style="text-decoration:none;color:inherit;"><div class="logo">hanezu<span class="accent">.</span></div></a>
+    <nav>
+      <ul>
+        <li><a href="../index.html#services">Services</a></li>
+        <li><a href="../works/">Works</a></li>
+        <li><a href="../pricing.html">Pricing</a></li>
+        <li><a href="../faq.html">FAQ</a></li>
+        <li><a href="index.html" class="active">Blog</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="article-header">
+  <div class="container">
+    <div class="label">ポートフォリオ / 受注</div>
+    <h1>受注に直結するポートフォリオサイトの作り方</h1>
+    <div class="article-meta">
+      <span>2026.05.08</span>
+      <span>·</span>
+      <span>by hanezu</span>
+      <span>·</span>
+      <span>読了時間 約7分</span>
+    </div>
+  </div>
+</section>
+
+<article class="article-body">
+  <div class="container">
+
+    <p>東京藝術大学デザイン科の hanezu です。</p>
+    <p>私は2週間で<strong>ココナラ7サービス出品 + ポートフォリオサイト11ページ</strong>を構築し、月10万ペースの副業受託を立ち上げました。</p>
+    <p>その中で<strong>「ポートフォリオサイトの存在」が受注率を 3〜5倍にした</strong>と確信しています。</p>
+    <p>この記事では、私が実際に作って公開しているポートフォリオサイトの作り方を、<strong>完全に再現可能な形</strong>で解説します。</p>
+    <p>私のサイト（参考）: <a href="../">hanezu-portfolio</a></p>
+
+    <h2>第1章: なぜポートフォリオサイトが必要か</h2>
+
+    <h3>ココナラ・Lancers だけでは差別化できない</h3>
+    <p>これらのプラットフォームでは：</p>
+    <ul>
+      <li>みんなが同じ画像サイズ</li>
+      <li>みんなが同じ説明文構造</li>
+      <li>みんなが同じプロフィール</li>
+    </ul>
+    <p>→ 価格でしか比較されなくなる。</p>
+
+    <p>ポートフォリオサイトを別途持つことで：</p>
+    <ul>
+      <li>「このセラーは別格だ」という印象</li>
+      <li>規約に縛られない自由なアピール</li>
+      <li>ココナラ外からの直案件受注</li>
+    </ul>
+
+    <h2>第2章: 構成（必須5ページ）</h2>
+
+    <ol>
+      <li><strong>Home</strong>（トップ）</li>
+      <li><strong>Works</strong>（作品集）</li>
+      <li><strong>Pricing</strong>（料金表）</li>
+      <li><strong>FAQ</strong>（よくある質問）</li>
+      <li><strong>Contact</strong>（お問い合わせ）</li>
+    </ol>
+
+    <p>これだけで十分。<strong>多すぎは逆効果</strong>。</p>
+
+    <h2>第3章: 技術選定</h2>
+
+    <h3>結論：HTML / CSS / JavaScript のみ で OK</h3>
+
+    <p>WordPress も React も Next.js も<strong>必要ない</strong>。</p>
+
+    <h3>理由</h3>
+    <ul>
+      <li>セキュリティ問題が起きにくい（静的サイト）</li>
+      <li>表示が圧倒的に速い</li>
+      <li>メンテナンスが楽</li>
+      <li>無料で公開できる</li>
+      <li>編集が簡単（テキストエディタで開ける）</li>
+    </ul>
+
+    <h3>推奨ツール</h3>
+    <ul>
+      <li><strong>VS Code</strong>（無料・最強）</li>
+      <li><strong>Figma</strong>（無料）：ワイヤーフレーム</li>
+      <li><strong>Vercel / Netlify / GitHub Pages</strong>（公開）</li>
+    </ul>
+
+    <h2>第4章: デザインの極意（藝大式）</h2>
+
+    <h3>1. 「書体」が9割</h3>
+    <p>ポートフォリオサイトの印象は<strong>書体</strong>で決まる。</p>
+    <p>おすすめフォント：</p>
+    <ul>
+      <li><strong>本文</strong>: Inter（無料・モダン）</li>
+      <li><strong>見出し</strong>: Noto Serif JP（和風）or Playfair Display（洋風）</li>
+      <li><strong>モノスペース</strong>: JetBrains Mono</li>
+    </ul>
+    <p>→ Google Fonts で全部無料</p>
+
+    <h3>2. 色は「2色 + ニュートラル」で</h3>
+    <p>推奨パレット例：</p>
+    <pre><code>Brand: メインの差し色（1色）
+Bg: ベージュ or オフホワイト
+Text: 限りなく黒に近いダークグレー
+Soft: 50%グレー（補助テキスト）
+Line: 罫線・区切り（10%グレー）</code></pre>
+
+    <h3>3. 「余白」が命</h3>
+    <p>藝大デザイン科の真骨頂。</p>
+    <ul>
+      <li>全ての要素に<strong>大きめの余白</strong></li>
+      <li>ページ上下: 100px 以上</li>
+      <li>要素間: 32〜80px</li>
+      <li>line-height: 1.7〜1.8</li>
+    </ul>
+    <p>→「もったいない」と思うくらい余白を取る。</p>
+
+    <h3>4. アニメーションは控えめに</h3>
+    <p>動きは少ないほどプロっぽい。</p>
+
+    <h2>第5章: 作品ページの作り方</h2>
+
+    <h3>各作品を「物語」として見せる</h3>
+
+    <ol>
+      <li>ヒーロー画像 + タイトル</li>
+      <li>メタ情報（年・カテゴリ・使用技術）</li>
+      <li>コンセプト（200字程度）</li>
+      <li>制作プロセス（3-5ステップ）</li>
+      <li>ギャラリー（3-5枚）</li>
+      <li>結果・成果（KPI 等）</li>
+    </ol>
+
+    <h3>「動くサンプル」を入れる</h3>
+    <p>私の場合、ポートフォリオサイト内に：</p>
+    <ul>
+      <li>AI診断LP（実際に動く）</li>
+      <li>AIチャットボットLP（実際に動く）</li>
+      <li>3Dシリーズ（レンダリング画像）</li>
+    </ul>
+    <p>を埋め込んでます。これが圧倒的差別化に。</p>
+
+    <div class="cta-box">
+      <h3>ポートフォリオ制作を依頼したい方へ</h3>
+      <p>「自分で作る時間がない」「藝大基準のクオリティに仕上げたい」という方は、<strong>ココナラのLP制作サービス</strong> にてお引き受けしております。</p>
+      <p>15,000円〜（オープン記念価格）。実例は <a href="../works/">Works ページ</a> をご覧ください。</p>
+    </div>
+
+    <h2>第6章: 失敗パターン</h2>
+
+    <h3>失敗1: 「すごい技術」を見せようとする</h3>
+    <p>派手なアニメーション・WebGL・3D表現は不要。クライアントが見たいのは技術力じゃなく「作品の質」。</p>
+
+    <h3>失敗2: 作品が少なすぎる</h3>
+    <p>3作品以下だと「経験が浅い」と思われる。<strong>最低5作品</strong>から始めよう（自主制作でOK）。</p>
+
+    <h3>失敗3: 文章が長すぎる</h3>
+    <p>訪問者は<strong>3秒で去る</strong>前提。見出しを大きく、段落を短く、箇条書きを多用。</p>
+
+    <h2>最後に</h2>
+
+    <p>ポートフォリオサイトは<strong>「あなた自身のブランド構築の起点」</strong>です。</p>
+    <p>副業を始めたばかりの今、最初の数百〜数千円の収入を得るより、<strong>先にちゃんとしたサイトを作る方</strong>が長期的に大きいリターンを生みます。</p>
+    <p>ぜひ、あなたのスタート地点を作ってください。</p>
+
+  </div>
+</article>
+
+<section class="related">
+  <div class="container" style="max-width: 1100px;">
+    <h3>関連記事</h3>
+    <div class="related-list">
+      <a href="01-ai-design-tips.html" class="related-card">
+        <h4>2週間で月10万円の副業を構築した話</h4>
+        <p>藝大ブランド × AI実装の独自ポジション</p>
+      </a>
+      <a href="02-notion-tips.html" class="related-card">
+        <h4>藝大式 Notion 運用術</h4>
+        <p>3年以上の運用ノウハウを段階的に解説</p>
+      </a>
+      <a href="04-3d-pipeline.html" class="related-card">
+        <h4>3Dプリント自動化パイプライン</h4>
+        <p>Gemini → Blender → 3Dプリンタ</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container" style="max-width: 1100px;">© 2026 hanezu design lab — Tokyo</div>
+</footer>
+
+</body>
+</html>

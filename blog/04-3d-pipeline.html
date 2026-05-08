@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gemini → Blender → 3Dプリンタ の自動化パイプライン — hanezu blog</title>
+<meta name="description" content="Nano Banana Pro でアイデア生成 → Tripo3D でメッシュ化 → Blender Python で STL 化 → Creality Print でスライス。コンペ応募・プロトタイピングまで使える完全自動化パイプライン。">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="article-style.css">
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <a href="../index.html" style="text-decoration:none;color:inherit;"><div class="logo">hanezu<span class="accent">.</span></div></a>
+    <nav>
+      <ul>
+        <li><a href="../index.html#services">Services</a></li>
+        <li><a href="../works/">Works</a></li>
+        <li><a href="../pricing.html">Pricing</a></li>
+        <li><a href="../faq.html">FAQ</a></li>
+        <li><a href="index.html" class="active">Blog</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="article-header">
+  <div class="container">
+    <div class="label">3D / Blender</div>
+    <h1>Gemini → Blender → 3Dプリンタ の自動化パイプライン</h1>
+    <div class="article-meta">
+      <span>2026.05.08</span>
+      <span>·</span>
+      <span>by hanezu</span>
+      <span>·</span>
+      <span>読了時間 約9分</span>
+    </div>
+  </div>
+</section>
+
+<article class="article-body">
+  <div class="container">
+
+    <p>東京藝術大学デザイン科の現役学生 hanezu です。</p>
+    <p>「アイデア → 3D実物」までを完全自動化したパイプラインを構築しました。</p>
+    <p>コンペ応募・プロトタイピング・趣味のフィギュア制作まで、一気通貫で使えます。</p>
+
+    <h2>全体フロー</h2>
+
+    <pre><code>[1. 2D画像生成]    [2. 3Dメッシュ変換]   [3. Blender調整]   [4. スライス]      [5. プリント]
+Nano Banana Pro → Tripo3D / Hunyuan3D → Blender 5.0 → Creality Print → 3Dプリンタ</code></pre>
+
+    <h2>Step 1: 2D画像生成</h2>
+
+    <h3>A. Gemini Nano Banana Pro（推奨・無料100枚/日）</h3>
+    <ul>
+      <li>URL: gemini.google.com</li>
+      <li>商用利用OK</li>
+      <li>1枚生成 30〜60秒</li>
+    </ul>
+
+    <h3>3D変換しやすいプロンプトのコツ</h3>
+    <p>例: "a simple ceramic vase with curved silhouette, white background, front view, product photography style, 3D-printable, no text"</p>
+
+    <p>避けるべき：</p>
+    <ul>
+      <li>複雑な背景</li>
+      <li>半透明・反射の多い物体</li>
+      <li>髪の毛など細かい構造</li>
+      <li>複数の物体が重なる</li>
+    </ul>
+
+    <h2>Step 2: 2D → 3Dメッシュ変換</h2>
+
+    <h3>🥇 Tripo3D（最高品質）</h3>
+    <ul>
+      <li>URL: tripo3d.ai</li>
+      <li>無料枠: 600クレジット（約5回）</li>
+      <li>出力: GLB / OBJ / FBX / STL</li>
+    </ul>
+
+    <h3>🥈 Hunyuan3D 2.0（完全無料）</h3>
+    <ul>
+      <li>HuggingFace Spaces で完全無料</li>
+      <li>待ち時間 1〜3分</li>
+    </ul>
+
+    <h3>🥉 Meshy.ai</h3>
+    <ul>
+      <li>無料枠 月10〜20回</li>
+      <li>高速（30秒〜1分）</li>
+    </ul>
+
+    <h2>Step 3: Blenderで調整</h2>
+
+    <p>私が公開している自動化スクリプトを使えば、Blender CLI で OBJ → STL を自動変換可能：</p>
+
+    <pre><code>/Applications/Blender.app/Contents/MacOS/Blender --background \
+  --python blender_import_export.py -- \
+  input.obj output.stl 50</code></pre>
+
+    <p>ターゲットサイズ（mm）も自動で調整。</p>
+
+    <h2>Step 4: Creality Print でスライス</h2>
+
+    <p>Creality Print は CLI でも自動スライス可能：</p>
+
+    <pre><code>/Applications/Creality\ Print.app/Contents/MacOS/CrealityPrint \
+  --slice 1 --orient 1 --outputdir ./output/ ./model.stl</code></pre>
+
+    <p>初回はGUIでプリンタ・フィラメントプロファイルを設定する必要がありますが、その後はCLIから完全自動化可能です。</p>
+
+    <h2>実例：「kasane / 重ね」procedural design</h2>
+
+    <p>私が作った3D作品「kasane」は、Blender Python でパラメトリックに生成しています：</p>
+
+    <pre><code># 3層の円盤を重ねて生成
+LAYERS = [
+    {"radius": 50, "thickness": 8,  "z": 0,  "offset": (0, 0)},
+    {"radius": 38, "thickness": 6,  "z": 8,  "offset": (4, 2)},
+    {"radius": 28, "thickness": 4,  "z": 14, "offset": (-3, 5)},
+]</code></pre>
+
+    <p>Python スクリプトで設計するメリット：</p>
+    <ul>
+      <li>パラメータ調整が一瞬</li>
+      <li>バリエーション生成が容易</li>
+      <li>再現性が高い</li>
+    </ul>
+
+    <p>実物の作品は <a href="../works/3d-series.html">Works ページ</a> でご覧いただけます。</p>
+
+    <div class="cta-box">
+      <h3>3Dパイプライン構築を依頼したい方へ</h3>
+      <p>「自分の事業で3Dプリント作品を作りたい」「コンペ応募の土台を作ってほしい」という方は、ココナラの<strong>「AIエージェント業務自動化」</strong>サービスにてお引き受けしております（8,000円〜）。</p>
+      <p>Blender Python スクリプト作成・3Dプリント環境構築・Webサイトでの作品紹介ページ制作 まで一気通貫で対応可能。</p>
+    </div>
+
+    <h2>コスト試算</h2>
+
+    <table>
+      <tr><th>項目</th><th>コスト</th></tr>
+      <tr><td>Gemini Nano Banana Pro</td><td>無料（100枚/日）</td></tr>
+      <tr><td>Tripo3D 無料枠</td><td>月数回</td></tr>
+      <tr><td>Hunyuan3D HF Spaces</td><td>完全無料</td></tr>
+      <tr><td>Blender</td><td>完全無料</td></tr>
+      <tr><td>Creality Print</td><td>完全無料</td></tr>
+    </table>
+
+    <p>→ <strong>完全に無料運用可能</strong>（Gemini無料枠 + Hunyuan3D + Blender + Creality Print）</p>
+
+    <h2>コンペ応募ユースケース</h2>
+
+    <p>このパイプラインは、デザインコンペでも強力です：</p>
+    <ul>
+      <li>Good Design ニューホープ賞</li>
+      <li>ジェームズ・ダイソン財団デザイン競技</li>
+      <li>KOKUYO Design Award</li>
+      <li>iF / Red Dot 国際デザイン賞</li>
+    </ul>
+
+    <h2>最後に</h2>
+
+    <p>「3Dプリンタを使いこなす」 ≠ 「複雑な操作を覚える」</p>
+    <p>むしろ、<strong>パイプラインを構築して定型化</strong>すれば、誰でも高品質な作品が量産できます。</p>
+    <p>藝大デザインの感性 × プログラマブルな量産性 が、これからのものづくりの本流になると確信しています。</p>
+
+  </div>
+</article>
+
+<section class="related">
+  <div class="container" style="max-width: 1100px;">
+    <h3>関連記事</h3>
+    <div class="related-list">
+      <a href="01-ai-design-tips.html" class="related-card">
+        <h4>2週間で月10万円の副業を構築した話</h4>
+        <p>藝大ブランド × AI実装の独自ポジション</p>
+      </a>
+      <a href="02-notion-tips.html" class="related-card">
+        <h4>藝大式 Notion 運用術</h4>
+        <p>3年以上の運用ノウハウを段階的に解説</p>
+      </a>
+      <a href="05-ai-agent.html" class="related-card">
+        <h4>AIエージェント実装が最強の副業ポジション</h4>
+        <p>2026年ブルーオーシャン市場の入り方</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container" style="max-width: 1100px;">© 2026 hanezu design lab — Tokyo</div>
+</footer>
+
+</body>
+</html>

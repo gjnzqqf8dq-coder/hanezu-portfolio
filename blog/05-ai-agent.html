@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026年最強の副業ポジション「AIエージェント実装」 — hanezu blog</title>
+<meta name="description" content="2026年のフリーランス市場で、AIエージェント実装が最強の副業ポジションになる理由。実例とロードマップを解説。">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="article-style.css">
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <a href="../index.html" style="text-decoration:none;color:inherit;"><div class="logo">hanezu<span class="accent">.</span></div></a>
+    <nav>
+      <ul>
+        <li><a href="../index.html#services">Services</a></li>
+        <li><a href="../works/">Works</a></li>
+        <li><a href="../pricing.html">Pricing</a></li>
+        <li><a href="../faq.html">FAQ</a></li>
+        <li><a href="index.html" class="active">Blog</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="article-header">
+  <div class="container">
+    <div class="label">AI / 自動化</div>
+    <h1>2026年最強の副業ポジション「AIエージェント実装」</h1>
+    <div class="article-meta">
+      <span>2026.05.08</span>
+      <span>·</span>
+      <span>by hanezu</span>
+      <span>·</span>
+      <span>読了時間 約8分</span>
+    </div>
+  </div>
+</section>
+
+<article class="article-body">
+  <div class="container">
+
+    <h2>2026年の副業市場で何が起きているか</h2>
+
+    <h3>量産型AI副業はほぼ全滅した</h3>
+    <p>2024〜2025年に流行った「AI副業」のうち、<strong>ほとんどが2026年現在は稼げなくなっています</strong>。</p>
+    <ul>
+      <li>❌ Faceless YouTube（AI生成動画）→ 規制 + 飽和</li>
+      <li>❌ KDP（AI生成電子書籍）→ Amazon が規制</li>
+      <li>❌ POD素AI画像 → 競合過多</li>
+      <li>❌ note量産 → 質の低い記事はAlgoから外される</li>
+      <li>❌ メルカリ自動出品 → 規約違反</li>
+    </ul>
+
+    <p><strong>「AIが書きました」をそのまま売る</strong>モデルは、もう市場が成熟しすぎていて勝てません。</p>
+
+    <h3>一方で、伸びている領域</h3>
+    <p>逆に、2026年に<strong>明らかに伸びている</strong>のはこれです：</p>
+    <ul>
+      <li>✅ <strong>AI実装代行</strong>（Notion + Telegram + Claude API 連携 等）</li>
+      <li>✅ <strong>AI機能付きWebサービス</strong>（チャットボット内蔵LP 等）</li>
+      <li>✅ <strong>AI×手仕事の融合品</strong>（陶芸 + 3Dプリンタ 等）</li>
+      <li>✅ <strong>教育コンテンツ</strong>（自分の経験ベース）</li>
+    </ul>
+    <p>共通点は<strong>「人間の判断・感性が中核」</strong>であること。AIは道具として使うが、価値の源泉は人間にある。</p>
+
+    <h2>「AIエージェント実装」が最強の理由</h2>
+
+    <h3>理由1: 競合がほぼいない</h3>
+
+    <p>ココナラで「AIエージェント」「業務自動化」「Notion API」 などで検索しても、まだプレイヤーは少数。</p>
+    <p>私が出品した時点で、出品サービス全体で<strong>数十件しかありませんでした</strong>（イラスト系は数千件）。</p>
+
+    <h3>理由2: 単価が高い</h3>
+
+    <table>
+      <tr><th>業務</th><th>相場</th></tr>
+      <tr><td>Zapier 設定代行</td><td>3,000〜10,000円</td></tr>
+      <tr><td>Make フロー構築</td><td>5,000〜15,000円</td></tr>
+      <tr><td>Notion API 連携</td><td>10,000〜50,000円</td></tr>
+      <tr><td>Telegram Bot 開発</td><td>20,000〜80,000円</td></tr>
+      <tr><td>Claude API カスタムBot</td><td>30,000〜100,000円</td></tr>
+    </table>
+
+    <h3>理由3: リテイナー化（月額）しやすい</h3>
+    <p>「月5,000円で運用代行」のような月額契約に持っていきやすい。一度決まれば寝てても入る。</p>
+
+    <h2>必要なスキル（最低限）</h2>
+
+    <ul>
+      <li>✅ JavaScript or Python の基礎</li>
+      <li>✅ HTTP API リクエストの基本</li>
+      <li>✅ Notion / Slack / Gmail などのSaaSの基本</li>
+      <li>✅ Webhook の概念</li>
+      <li>✅ Claude / Gemini / OpenAI API の使い方</li>
+    </ul>
+
+    <p><strong>全部、本気でやれば1〜2週間で習得可能</strong>です。私もそうでした。</p>
+
+    <h2>受注パターン（実例）</h2>
+
+    <h3>ケース1: 通販ショップオーナー</h3>
+    <ul>
+      <li><strong>課題</strong>: 毎日のスプレッドシート集計に2時間かかる</li>
+      <li><strong>解決</strong>: Notion API でデータ取得 → Gemini で要約 → Slack 通知</li>
+      <li><strong>単価</strong>: 15,000円（実装3日）+ 月5,000円（運用代行）</li>
+    </ul>
+
+    <h3>ケース2: フリーランスデザイナー</h3>
+    <ul>
+      <li><strong>課題</strong>: クライアント連絡を Gmail で管理してて見落としがち</li>
+      <li><strong>解決</strong>: Gmail API で取得 → Claude API で重要度判定 → 緊急ならLINE通知</li>
+      <li><strong>単価</strong>: 25,000円</li>
+    </ul>
+
+    <h3>ケース3: SNS運用代行業者</h3>
+    <ul>
+      <li><strong>課題</strong>: 投稿予定を Notion で管理してるが、転記が手作業</li>
+      <li><strong>解決</strong>: Notion → Twitter API で自動投稿 + 結果を Notion に書き戻し</li>
+      <li><strong>単価</strong>: 30,000円</li>
+    </ul>
+
+    <h2>「自分のための実例」を先に作る</h2>
+
+    <p><strong>これが超重要です</strong>。</p>
+    <p>私の場合、ココナラで売る前に<strong>自分用の Telegram Bot</strong> を作りました：</p>
+    <ul>
+      <li>毎朝7時にニュースを Telegram に自動配信</li>
+      <li>Notion からタスクを取得して通知</li>
+      <li>Gemini で要約してから配信</li>
+    </ul>
+
+    <p>この<strong>「自作実例」</strong>があると、ココナラのプロフィールに書ける。「机上の空論ではない」と証明できる。</p>
+
+    <div class="cta-box">
+      <h3>AIエージェント実装を依頼したい方へ</h3>
+      <p>「自社業務に AI を組み込みたい」「Zapier 月額が高くて辛い」という方は、ココナラの<strong>「AIエージェント業務自動化」</strong>サービスにてお引き受けしております。</p>
+      <p>8,000円〜（オープン記念価格・1業務）。月額運用サポートも 5,000円/月 で対応可能。</p>
+      <p>詳細は <a href="../pricing.html">価格表</a> をご覧ください。</p>
+    </div>
+
+    <h2>学習リソース</h2>
+
+    <ul>
+      <li><strong>Anthropic 公式ドキュメント（Claude API）</strong>: docs.anthropic.com</li>
+      <li><strong>Google AI Studio（Gemini API）</strong>: aistudio.google.com</li>
+      <li><strong>Notion API</strong>: developers.notion.com</li>
+      <li><strong>Telegram Bot API</strong>: core.telegram.org/bots</li>
+    </ul>
+
+    <h2>最後に</h2>
+
+    <p>2026年現在、AIエージェント実装は<strong>「学べば誰でも参入できるが、実際に学ぶ人が少ない」</strong>ブルーオーシャン。</p>
+    <p>1〜2週間の学習投資で、月収10〜30万円の副業ポジションが手に入ります。</p>
+    <p>「AIで何かしたいけど、何していいかわからない」と思ってる人ほど、このポジションは向いています。</p>
+    <p>むしろ、<strong>「AI を使う」ではなく「AI を組み込む」</strong> 側になる。これが2026年以降、決定的な差別化になる。</p>
+
+  </div>
+</article>
+
+<section class="related">
+  <div class="container" style="max-width: 1100px;">
+    <h3>関連記事</h3>
+    <div class="related-list">
+      <a href="01-ai-design-tips.html" class="related-card">
+        <h4>2週間で月10万円の副業を構築した話</h4>
+        <p>藝大ブランド × AI実装の独自ポジション</p>
+      </a>
+      <a href="04-3d-pipeline.html" class="related-card">
+        <h4>3Dプリント自動化パイプライン</h4>
+        <p>Gemini → Blender → 3Dプリンタ</p>
+      </a>
+      <a href="03-portfolio-tips.html" class="related-card">
+        <h4>受注に直結するポートフォリオ作成術</h4>
+        <p>受注率を3〜5倍にするWebサイトの作り方</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container" style="max-width: 1100px;">© 2026 hanezu design lab — Tokyo</div>
+</footer>
+
+</body>
+</html>

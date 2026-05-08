@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — hanezu design lab</title>
+<meta name="description" content="藝大デザイン科の現役学生が運営するデザインスタジオ hanezu のブログ。AI受託・Notion運用・ポートフォリオ作成・副業の実体験を発信。">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --hanezu: #C2403A;
+    --hanezu-bg: #FAF6F2;
+    --ink: #1A1A1A;
+    --ink-soft: #4A4A4A;
+    --ink-faint: #8A8A8A;
+    --line: #E8E0D6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', 'Noto Serif JP', sans-serif;
+    background: var(--hanezu-bg);
+    color: var(--ink);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 32px; }
+
+  header {
+    padding: 32px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  header .container {
+    display: flex; justify-content: space-between; align-items: center;
+    max-width: 1100px;
+  }
+  .logo { font-family: 'Noto Serif JP', serif; font-size: 22px; font-weight: 700; }
+  .logo .accent { color: var(--hanezu); }
+  nav ul { list-style: none; display: flex; gap: 36px; }
+  nav a { color: var(--ink-soft); text-decoration: none; font-size: 14px; }
+
+  .hero {
+    padding: 80px 0 60px;
+    text-align: center;
+  }
+  .hero .label {
+    font-size: 12px; color: var(--hanezu);
+    letter-spacing: 0.2em; text-transform: uppercase;
+    font-weight: 600; margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(36px, 5vw, 56px);
+    margin-bottom: 24px;
+    font-weight: 700;
+  }
+  .hero p {
+    font-size: 17px;
+    color: var(--ink-soft);
+    max-width: 580px;
+    margin: 0 auto;
+  }
+
+  .article-list {
+    padding: 60px 0 100px;
+  }
+  .article-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 40px;
+    margin-bottom: 24px;
+    transition: all 0.2s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  .article-card:hover {
+    border-color: var(--hanezu);
+    transform: translateY(-2px);
+  }
+  .article-meta {
+    display: flex;
+    gap: 16px;
+    color: var(--hanezu);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .article-card h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 24px;
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+  .article-card .excerpt {
+    color: var(--ink-soft);
+    font-size: 15px;
+    margin-bottom: 16px;
+  }
+  .article-card .read-more {
+    color: var(--hanezu);
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  footer {
+    padding: 40px 0;
+    text-align: center;
+    color: var(--ink-faint);
+    font-size: 12px;
+    border-top: 1px solid var(--line);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <a href="../index.html" style="text-decoration:none;color:inherit;"><div class="logo">hanezu<span class="accent">.</span></div></a>
+    <nav>
+      <ul>
+        <li><a href="../index.html#services">Services</a></li>
+        <li><a href="../works/">Works</a></li>
+        <li><a href="../pricing.html">Pricing</a></li>
+        <li><a href="../faq.html">FAQ</a></li>
+        <li><a href="index.html" style="color:var(--hanezu);">Blog</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="label">Blog</div>
+    <h1>藝大式 デザイン × AI</h1>
+    <p>東京藝術大学デザイン科の現役学生が、AI実装と藝大デザインの実体験を発信します。<br>副業・受注・コンペ・3Dプリント・Notion運用など。</p>
+  </div>
+</section>
+
+<section class="article-list">
+  <div class="container">
+
+    <a href="01-ai-design-tips.html" class="article-card">
+      <div class="article-meta">
+        <span>2026.05.08</span>
+        <span>·</span>
+        <span>副業 / AI</span>
+      </div>
+      <h2>藝大生が2週間で月10万円の副業を構築した話</h2>
+      <p class="excerpt">東京藝術大学デザイン科に進学して2年目。生活費を稼ぐためココナラを軸にした副業を始めました。2週間で受注12件、手取り約9万円まで来たプロセスを公開します。</p>
+      <div class="read-more">続きを読む →</div>
+    </a>
+
+    <a href="02-notion-tips.html" class="article-card">
+      <div class="article-meta">
+        <span>2026.05.08</span>
+        <span>·</span>
+        <span>Notion / 生産性</span>
+      </div>
+      <h2>藝大式 Notion 運用で「自分の脳の外部化」を完成させる</h2>
+      <p class="excerpt">3年以上 Notion を運用していて、現在は「起きてから寝るまでの全行動が Notion に紐づいている」状態。完璧な「全部入り」は最初は無理。段階的に作る方法を解説します。</p>
+      <div class="read-more">続きを読む →</div>
+    </a>
+
+    <a href="03-portfolio-tips.html" class="article-card">
+      <div class="article-meta">
+        <span>2026.05.08</span>
+        <span>·</span>
+        <span>ポートフォリオ / 受注</span>
+      </div>
+      <h2>受注に直結するポートフォリオサイトの作り方</h2>
+      <p class="excerpt">「ポートフォリオサイトの存在」が受注率を 3〜5倍にしたと確信しています。再現可能な形で、デザイン・技術選定・公開方法までを完全公開。</p>
+      <div class="read-more">続きを読む →</div>
+    </a>
+
+    <a href="04-3d-pipeline.html" class="article-card">
+      <div class="article-meta">
+        <span>2026.05.08</span>
+        <span>·</span>
+        <span>3D / Blender</span>
+      </div>
+      <h2>Gemini → Blender → 3Dプリンタ の自動化パイプライン</h2>
+      <p class="excerpt">Nano Banana Pro でアイデア生成 → Tripo3D でメッシュ化 → Blender Python で STL 化 → Creality Print でスライス。コンペ応募・プロトタイピング・趣味のフィギュア制作まで使える完全自動化パイプライン。</p>
+      <div class="read-more">続きを読む →</div>
+    </a>
+
+    <a href="05-ai-agent.html" class="article-card">
+      <div class="article-meta">
+        <span>2026.05.08</span>
+        <span>·</span>
+        <span>AI / 自動化</span>
+      </div>
+      <h2>2026年最強の副業ポジション「AIエージェント実装」</h2>
+      <p class="excerpt">2026年現在、ココナラで「AIエージェント」検索しても出品100件以下。「LP制作」は3万件超え。明らかに穴場のポジションについて解説します。</p>
+      <div class="read-more">続きを読む →</div>
+    </a>
+
+  </div>
+</section>
+
+<footer>
+  <div class="container">© 2026 hanezu design lab — Tokyo</div>
+</footer>
+
+</body>
+</html>

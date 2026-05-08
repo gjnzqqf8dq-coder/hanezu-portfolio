@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>藝大式 Notion 運用で「自分の脳の外部化」を完成させる — hanezu blog</title>
+<meta name="description" content="3年以上 Notion を運用している藝大デザイン科の学生が、段階的に作る Notion ワークスペース構築術を解説。完璧な「全部入り」を最初から目指さない方法。">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="article-style.css">
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <a href="../index.html" style="text-decoration:none;color:inherit;"><div class="logo">hanezu<span class="accent">.</span></div></a>
+    <nav>
+      <ul>
+        <li><a href="../index.html#services">Services</a></li>
+        <li><a href="../works/">Works</a></li>
+        <li><a href="../pricing.html">Pricing</a></li>
+        <li><a href="../faq.html">FAQ</a></li>
+        <li><a href="index.html" class="active">Blog</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="article-header">
+  <div class="container">
+    <div class="label">Notion / 生産性</div>
+    <h1>藝大式 Notion 運用で「自分の脳の外部化」を完成させる</h1>
+    <div class="article-meta">
+      <span>2026.05.08</span>
+      <span>·</span>
+      <span>by hanezu</span>
+      <span>·</span>
+      <span>読了時間 約8分</span>
+    </div>
+  </div>
+</section>
+
+<article class="article-body">
+  <div class="container">
+
+    <p>私は東京藝術大学デザイン科の学生 hanezu です。</p>
+    <p>3年以上 Notion を運用していて、現在は「<strong>起きてから寝るまでの全行動が Notion に紐づいている</strong>」状態。</p>
+    <p>この記事では、私が実際に運用している藝大式 Notion 運用術を解説します。</p>
+    <p>完璧な「全部入り」は最初は無理です。<strong>段階的に作る</strong>ことをおすすめします。</p>
+
+    <h2>第1章: なぜ Notion なのか</h2>
+
+    <h3>他のツールではダメな理由</h3>
+    <p>私は過去に色々試しました：</p>
+    <ul>
+      <li>❌ Apple純正アプリ（iCloud依存・拡張性なし）</li>
+      <li>❌ Trello（カンバンしか使えない）</li>
+      <li>❌ Asana（チーム前提、個人には大きすぎる）</li>
+      <li>❌ Obsidian（マークダウン特化、関連性が弱い）</li>
+    </ul>
+
+    <p>Notion が他に勝る点：</p>
+    <ul>
+      <li>✅ <strong>データベースの相互関係</strong>（Relation で繋がる）</li>
+      <li>✅ <strong>ページとデータベースの混在</strong>（柔軟性）</li>
+      <li>✅ <strong>無料プランが寛大</strong>（個人なら無料で十分）</li>
+      <li>✅ <strong>AI 統合</strong>（Notion AI / Notion API）</li>
+      <li>✅ <strong>モバイル / Web / Mac / Win 全対応</strong></li>
+    </ul>
+
+    <h2>第2章: 藝大式 Notion 構造</h2>
+
+    <h3>トップレベル構造（5つだけ）</h3>
+    <pre><code>🏠 Home（ダッシュボード）
+├── 📅 Today  （今日のすべて）
+├── 📌 Projects （進行中プロジェクト）
+├── 🎯 Goals  （目標管理）
+└── 📚 Library （資料・読書・ログ）</code></pre>
+
+    <p>これ以上増やさない。<strong>シンプルが正義</strong>。</p>
+
+    <h3>各ページの役割</h3>
+
+    <h3>🏠 Home（ダッシュボード）</h3>
+    <ul>
+      <li>今日のタスク（最大10個）</li>
+      <li>今週の目標</li>
+      <li>気分・体調</li>
+      <li>よく使うリンク</li>
+    </ul>
+    <p>→ <strong>これを見るだけで、今日何をすべきかがわかる</strong>状態に。</p>
+
+    <h2>第3章: タスク管理の極意</h2>
+
+    <h3>4象限ではなく「3階層」で管理</h3>
+    <p>タスク管理の有名な「アイゼンハワーマトリクス」は、<strong>実は使いにくい</strong>。</p>
+    <p>私が使ってるのは「<strong>3階層</strong>」モデル：</p>
+    <pre><code>Level 1: 今日中（赤）
+Level 2: 今週中（黄）
+Level 3: 今月中（緑）</code></pre>
+
+    <p>各タスクに「期限ステータス」をつけて、Today ビューでは Level 1 だけ表示。</p>
+
+    <h3>タスクのプロパティ最小限</h3>
+    <p>各タスクに必要なのはこれだけ：</p>
+    <ul>
+      <li>✅ ステータス（Todo / Doing / Done）</li>
+      <li>🏷️ タグ（仕事 / 学習 / 個人）</li>
+      <li>📅 期限</li>
+      <li>🔗 関連プロジェクト（Relation）</li>
+    </ul>
+
+    <p>これ以上増やすと「タスクを管理するためのタスク」が発生して本末転倒。</p>
+
+    <h2>第4章: 副業管理（学生×受託）</h2>
+
+    <h3>売上 / 経費を全部 Notion で</h3>
+    <p>確定申告の時、Notion を見るだけで提出資料が作れる状態にする。</p>
+
+    <p>必要なデータベース：</p>
+    <ul>
+      <li>売上 DB（日付・プラットフォーム・金額・手数料・案件Relation）</li>
+      <li>経費 DB（日付・項目・金額・支払方法・レシート画像）</li>
+      <li>案件 DB（クライアント・進捗・連絡履歴・納品物）</li>
+      <li>クライアント DB（連絡先・過去案件・リピート可能性）</li>
+    </ul>
+
+    <h2>第5章: AI 統合</h2>
+
+    <h3>Notion API でAI連携</h3>
+    <p>これが本当の活用法。</p>
+    <p>私の実装例：</p>
+    <ol>
+      <li><strong>毎朝7時、Telegram に「今日のタスク + ニュース要約」が届く</strong></li>
+      <li><strong>新しい受注が来ると、自動で Notion に案件ページが作られる</strong></li>
+      <li><strong>Gmail に重要メールが来ると、LINE に通知</strong></li>
+    </ol>
+
+    <p>これらは月数百円の API 費用で全部できます。</p>
+
+    <div class="cta-box">
+      <h3>あなたの脳を外部化しませんか？</h3>
+      <p>私が実際に運用している Notion ワークスペースをそのまま複製できる<strong>テンプレート</strong>を BOOTH で販売しています：</p>
+      <ul>
+        <li>学生向けバージョン（980円）</li>
+        <li>フリーランス向けバージョン（1,480円）</li>
+        <li>副業サラリーマン向けバージョン（980円）</li>
+      </ul>
+      <p>カスタム構築依頼もココナラから（3,000円〜）承っております。</p>
+    </div>
+
+    <h2>第6章: 段階的構築プラン</h2>
+
+    <ul>
+      <li><strong>1週目</strong>: 最低限のダッシュボード（Home + 今日のタスク）</li>
+      <li><strong>2週目</strong>: タスク + プロジェクト</li>
+      <li><strong>3週目</strong>: 習慣 + 目標</li>
+      <li><strong>4週目</strong>: 副業管理（売上 / 経費）</li>
+      <li><strong>1か月後</strong>: 自分用にカスタマイズ完了</li>
+    </ul>
+
+    <h2>最後に</h2>
+
+    <p>Notion は<strong>「自分の脳の外部化」</strong>ツールです。</p>
+    <p>うまく運用すれば、「あれを忘れた」「これを後回しにした」というストレスが激減します。</p>
+    <p>最初の3週間は試行錯誤ですが、自分なりの形ができれば、<strong>一生使えるシステム</strong>になります。</p>
+
+  </div>
+</article>
+
+<section class="related">
+  <div class="container" style="max-width: 1100px;">
+    <h3>関連記事</h3>
+    <div class="related-list">
+      <a href="01-ai-design-tips.html" class="related-card">
+        <h4>2週間で月10万円の副業を構築した話</h4>
+        <p>藝大ブランド × AI実装の独自ポジション</p>
+      </a>
+      <a href="03-portfolio-tips.html" class="related-card">
+        <h4>受注に直結するポートフォリオ作成術</h4>
+        <p>受注率を3〜5倍にするWebサイトの作り方</p>
+      </a>
+      <a href="05-ai-agent.html" class="related-card">
+        <h4>AIエージェント実装が最強の副業ポジション</h4>
+        <p>2026年ブルーオーシャン市場の入り方</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container" style="max-width: 1100px;">© 2026 hanezu design lab — Tokyo</div>
+</footer>
+
+</body>
+</html>
