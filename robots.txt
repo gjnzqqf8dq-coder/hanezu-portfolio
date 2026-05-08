@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gjnzqqf8dq-coder.github.io/hanezu-portfolio/sitemap.xml
