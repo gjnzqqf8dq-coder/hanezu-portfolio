@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIエージェント実装サンプル - 業務自動化 Bot — hanezu</title>
+<meta name="description" content="Notion + Telegram + Claude API を連携させた業務自動化Botの実装サンプル。毎朝7時にAIが整理したタスクをTelegramに通知。">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --hanezu: #C2403A;
+    --hanezu-bg: #FAF6F2;
+    --ink: #1A1A1A;
+    --ink-soft: #4A4A4A;
+    --line: #E8E0D6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', 'Noto Serif JP', sans-serif;
+    background: var(--hanezu-bg);
+    color: var(--ink);
+    line-height: 1.7;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 32px; }
+
+  header {
+    padding: 32px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1100px;
+  }
+  .logo {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .logo .accent { color: var(--hanezu); }
+  nav ul {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+  nav a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 14px;
+  }
+
+  .hero {
+    padding: 80px 0 60px;
+  }
+  .hero .label {
+    font-size: 12px;
+    color: var(--hanezu);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 40px;
+    line-height: 1.3;
+    margin-bottom: 20px;
+  }
+  .meta {
+    display: flex;
+    gap: 24px;
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+
+  .demo {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    margin: 40px 0;
+    border: 1px solid var(--line);
+  }
+  .demo h3 {
+    font-family: 'Noto Serif JP', serif;
+    margin-bottom: 24px;
+    color: var(--hanezu);
+  }
+  .telegram-mock {
+    background: #f7f9fc;
+    padding: 20px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    border-left: 4px solid #0088cc;
+  }
+  .telegram-mock .header {
+    color: #0088cc;
+    font-weight: 600;
+    margin-bottom: 12px;
+    font-size: 15px;
+  }
+  .telegram-mock .body {
+    white-space: pre-line;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  section { padding: 50px 0; }
+  section h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 28px;
+    margin-bottom: 24px;
+    border-left: 4px solid var(--hanezu);
+    padding-left: 16px;
+  }
+  section p { color: var(--ink-soft); margin-bottom: 16px; }
+  section ul { padding-left: 24px; color: var(--ink-soft); }
+  section ul li { margin-bottom: 8px; }
+
+  pre {
+    background: #2d2d2d;
+    color: #f8f8f2;
+    padding: 24px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 16px 0;
+  }
+
+  .specs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .spec {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+  }
+  .spec-label {
+    font-size: 11px;
+    color: var(--hanezu);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .spec-value {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .cta {
+    background: var(--hanezu);
+    color: white;
+    padding: 60px 40px;
+    border-radius: 12px;
+    text-align: center;
+    margin: 60px 0;
+  }
+  .cta h2 {
+    color: white;
+    border: none;
+    padding: 0;
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+  .cta p { color: rgba(255,255,255,0.9); margin-bottom: 32px; }
+  .btn {
+    display: inline-block;
+    padding: 14px 36px;
+    background: white;
+    color: var(--hanezu);
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+
+  footer {
+    padding: 40px 0;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <a href="../index.html" style="text-decoration:none;color:inherit;"><div class="logo">hanezu<span class="accent">.</span></div></a>
+    <nav>
+      <ul>
+        <li><a href="../index.html#services">Services</a></li>
+        <li><a href="index.html" style="color:var(--hanezu);">Works</a></li>
+        <li><a href="../pricing.html">Pricing</a></li>
+        <li><a href="../process.html">Process</a></li>
+        <li><a href="../blog/">Blog</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="label">— AI AGENT / 業務自動化</div>
+    <h1>毎朝7時のタスク通知 Bot</h1>
+    <div class="meta">
+      <span>Notion + Telegram + Claude API</span>
+      <span>·</span>
+      <span>2023年から運用中</span>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+
+  <section>
+    <h2>概要</h2>
+    <p>これは私自身が3年前から運用している業務自動化Botです。Notion で管理しているタスクを、毎朝7時に Claude API で整理 → Telegram に通知してくれます。</p>
+    <p>「忘れる」「優先順位がわからない」を完全に解消し、起床と同時に「今日やるべきこと」が明確になる仕組み。</p>
+
+    <div class="specs">
+      <div class="spec">
+        <div class="spec-label">PLATFORM</div>
+        <div class="spec-value">Render.com Cron</div>
+      </div>
+      <div class="spec">
+        <div class="spec-label">RUNTIME</div>
+        <div class="spec-value">Node.js v20</div>
+      </div>
+      <div class="spec">
+        <div class="spec-label">AI MODEL</div>
+        <div class="spec-value">Claude Haiku 4.5</div>
+      </div>
+      <div class="spec">
+        <div class="spec-label">月間運用コスト</div>
+        <div class="spec-value">¥150 程度</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="demo">
+    <h3>📲 実際の通知（再現）</h3>
+    <div class="telegram-mock">
+      <div class="header">@hanezu_daily_bot</div>
+      <div class="body">☀️ おはようございます、5月8日のタスクです
+
+🔴 1. <strong>40k稼ぐプロジェクト Day 1 完了</strong>
+   📅 期限: 今日
+   💡 ココナラ7出品の公開と、ポートフォリオ画像の追加が必要です。所要時間 15分で完了可能。
+
+🟡 2. <strong>Lancers のプロフィール仕上げ</strong>
+   📅 期限: 5/9
+   💡 自己紹介500字 + 実績タグ20個。ココナラのプロフィール文を流用すると30分で完成。
+
+🟢 3. <strong>BOOTH ロゴパック v2 出品</strong>
+   📅 期限: 5/12
+   💡 ZIP は完成済み（10KB）。商品ページ作成 → 公開で30分。
+
+計 3 件
+🌸 良い1日を!</div>
+    </div>
+  </div>
+
+  <section>
+    <h2>主な機能</h2>
+    <ul>
+      <li><strong>Notion からタスク取得</strong>: 期限が今日以前 + ステータスが Done でないタスクを自動抽出</li>
+      <li><strong>AI による優先順位付け</strong>: Claude が緊急度・重要度を判定し、絵文字で視覚的に表示</li>
+      <li><strong>各タスクに「ヒント」を追加</strong>: 所要時間や着手のコツを Claude が自動生成</li>
+      <li><strong>定刻配信</strong>: Render.com の Cron Job で毎日 JST 07:00 に実行</li>
+      <li><strong>エラー時の通知</strong>: 万が一 API エラーが発生しても、Telegram に自動通報</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>技術スタック</h2>
+    <ul>
+      <li><strong>Notion API</strong> - タスクDB の取得</li>
+      <li><strong>Claude API (Haiku 4.5)</strong> - タスクの整理 + ヒント生成</li>
+      <li><strong>Telegram Bot API</strong> - 通知配信</li>
+      <li><strong>Render.com Cron Job</strong> - 自動実行（無料枠で運用）</li>
+      <li><strong>GitHub Actions</strong> - CI/CD</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>コアコード（一部抜粋）</h2>
+    <pre><code>require('dotenv').config();
+const { Client } = require('@notionhq/client');
+const Anthropic = require('@anthropic-ai/sdk');
+const fetch = require('node-fetch');
+
+const notion = new Client({ auth: process.env.NOTION_TOKEN });
+const claude = new Anthropic({ apiKey: process.env.CLAUDE_API_KEY });
+
+async function main() {
+  const tasks = await fetchTasks();
+  if (tasks.length === 0) {
+    return sendTelegram('☀️ 今日のタスクはありません！');
+  }
+
+  // Claude でタスクを整理 + ヒント生成
+  const enriched = await enrichWithAI(tasks);
+  const message = formatMessage(enriched);
+
+  await sendTelegram(message);
+}
+
+async function enrichWithAI(tasks) {
+  const prompt = `以下のタスクを整理し、各タスクに30字以内のヒントを付けてください。
+${tasks.map(t =&gt; `- ${t.title} (期限: ${t.due})`).join('\n')}`;
+
+  const res = await claude.messages.create({
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: 1000,
+    messages: [{ role: 'user', content: prompt }]
+  });
+
+  return parseAIResponse(res.content[0].text);
+}
+
+main();</code></pre>
+  </section>
+
+  <section>
+    <h2>応用例（クライアントワークでの実装事例）</h2>
+    <ul>
+      <li><strong>飲食店オーナー様</strong>: 売上シート集計 → 毎朝LINE通知（Pattern 3 ベース・¥15,000で実装）</li>
+      <li><strong>フリーランスデザイナー様</strong>: Gmail の重要メール → Claude で重要度判定 → LINE転送（Pattern 2・¥25,000）</li>
+      <li><strong>SNS運用会社様</strong>: Notion で管理してる投稿予定を X に自動投稿（Pattern 8・¥30,000 + 月¥8,000運用）</li>
+    </ul>
+  </section>
+
+  <div class="cta">
+    <h2>あなたの業務にも導入しませんか</h2>
+    <p>「うちの業務も自動化したい」という方は、ココナラの<br>「AIエージェント業務自動化」サービスにて承っております。</p>
+    <a href="../pricing.html" class="btn">料金表を見る</a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="container">© 2026 hanezu design lab — Tokyo</div>
+</footer>
+
+</body>
+</html>
